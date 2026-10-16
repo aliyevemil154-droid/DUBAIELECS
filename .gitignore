@@ -1,0 +1,17 @@
+node_modules/
+.npm-cache/
+.local-runtime/
+.next/
+.env*
+!.env.example
+*.tsbuildinfo
+data/
+.data/
+playwright-report/
+test-results/
+*.log
+.DS_Store
+
+# Local scratch files and exports
+work/
+output/

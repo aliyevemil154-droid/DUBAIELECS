@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: dubai-electronics-api
+    runtime: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    numInstances: 1
+    envVars:
+      - key: NODE_VERSION
+        value: 24
+      - key: NODE_ENV
+        value: production
+      - key: BACKEND_ONLY
+        value: 1
+      - key: APP_URL
+        sync: false
+      - key: PAYMENT_PROVIDER
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: ORDERS_DB_PATH
+        value: /var/data/orders.sqlite
+      - key: ENGAGEMENT_DB_PATH
+        value: /var/data/engagement.sqlite
+    disk:
+      name: store-data
+      mountPath: /var/data
+      sizeGB: 1

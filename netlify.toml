@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "24"
+  NEXT_TELEMETRY_DISABLED = "1"
+
+# Netlify automatically enables its Next.js runtime. Set BACKEND_URL in the
+# Netlify environment to your HTTPS Render origin before building.
