@@ -366,11 +366,10 @@
   place-items: center;
   overflow: hidden;
 }
-.checkout-item-image img {
+.checkout-item-image .product-photo {
   width: 90%;
   height: 90%;
   object-fit: contain;
-  mix-blend-mode: multiply;
 }
 .checkout-item-details {
   flex: 1;

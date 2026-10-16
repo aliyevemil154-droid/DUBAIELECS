@@ -1,4 +1,4 @@
-import { phonePhotos, proMaxHero, airPhotos, macProPhotos, samsungPhoto, dysonPhoto, playstationPhoto } from "./product-photos";
+import { phonePhotos, productPhoto } from "./product-photos";
 
 export const categories = [
   "Smartphones",
@@ -46,7 +46,7 @@ export const phoneColors = [
 ];
 
 export const proMaxColors = phoneColors.map((color) => ({
-  ...color, image: color.name === "Burgundy" ? proMaxHero : color.image,
+  ...color, image: productPhoto("iphone-18-pro-max", color.name),
 }));
 
 // Money is calculated in integer qepik and rounded once per unit.
@@ -63,14 +63,8 @@ function configurations(entries: [string, number][]) {
     return { name, originalPrice, price: discountedPrice(originalPrice), available: true };
   });
 }
-function finishes(prefix: string, entries: [string, string][]) {
-  return entries.map(([name, value]) => {
-    const image = prefix === "s25-ultra" ? samsungPhoto("s25", name)
-      : prefix === "s26-ultra" ? samsungPhoto("s26", name)
-      : prefix === "macbook-air" ? airPhotos[name as keyof typeof airPhotos]
-      : macProPhotos[name as keyof typeof macProPhotos];
-    return { name, value, image };
-  });
+function finishes(_prefix: string, entries: [string, string][]) {
+  return entries.map(([name, value]) => ({ name, value, image: "" }));
 }
 const s25Colors = finishes("s25-ultra", [
   ["Titanium Silverblue", "#a7b7c7"], ["Titanium Black", "#42454a"],
@@ -84,11 +78,12 @@ const s26Colors = finishes("s26-ultra", [
 const airColors = finishes("macbook-air", [["Sky Blue", "#b6cad9"], ["Midnight", "#303c49"], ["Starlight", "#e5dac9"], ["Silver", "#cfd0d2"]]);
 const macProColors = finishes("macbook-pro", [["Space Black", "#424344"], ["Silver", "#cfd0d2"]]);
 function configuredProduct(id: string, name: string, category: ProductCategory, storage: ReturnType<typeof configurations>, colors: ReturnType<typeof finishes>, specs: string[], optionLabel = "Storage"): Product {
+  colors = colors.map((color) => ({ ...color, image: productPhoto(id, color.name) }));
   return { id, name, category, subtitle: `${storage[0].name} · ${colors[0].name}`, price: storage[0].price, originalPrice: storage[0].originalPrice,
     image: colors[0].image, badge: "30% OFF", colors, storage, specs, optionLabel, featured: true };
 }
 
-export const products: Product[] = [
+const catalog: Product[] = [
   {
     id: "iphone-18-pro", name: "iPhone 18 Pro", subtitle: "256 GB · Burgundy",
     category: "Smartphones", price: 1874, image: phoneColors[0].image,
@@ -108,13 +103,12 @@ export const products: Product[] = [
       { name: "256 GB", price: null, available: false },
       { name: "512 GB", price: 2179, available: true },
     ],
-    photoNote: "Official Apple Pro series finish imagery. Regional packaging may vary.",
     specs: ["256 GB unavailable", "6.9-inch Super Retina XDR display", "QEYDIYYATSIZ · Device registration not included"],
     featured: true,
   },
   {
     id: "dyson-hair-dryer", name: "Dyson Supersonic Nural", subtitle: "Intelligent hair dryer",
-    category: "Hair care", price: 489, image: dysonPhoto,
+    category: "Hair care", price: 489, image: productPhoto("dyson-hair-dryer", "Ceramic Pink / Rose Gold"),
     badge: "Limited stock", stock: 4, colors: [{ name: "Ceramic Pink / Rose Gold", value: "#d69fa6" }],
     specs: ["Scalp protect mode", "Automatic pause detection", "Intelligent heat control"],
     featured: true,
@@ -212,7 +206,7 @@ export const products: Product[] = [
     category: "Gaming",
     price: 549.5,
     originalPrice: 1099,
-    image: playstationPhoto,
+    image: productPhoto("playstation-5-disc", "White"),
     colors: [{ name: "White", value: "#e6e7e9" }],
     specs: [
       "1 TB SSD",
@@ -359,12 +353,20 @@ export const products: Product[] = [
   },
 ];
 
+// Resolve all surfaces (cards, search, wishlist, bag, checkout) from one local
+// asset registry. Product information and commercial configuration are untouched.
+export const products: Product[] = catalog.map((product) => ({
+  ...product,
+  image: productPhoto(product.id, product.colors[0].name),
+  colors: product.colors.map((color) => ({ ...color, image: productPhoto(product.id, color.name) })),
+}));
+
 export function variantProduct(product: Product, storageIndex = 0, colorIndex = 0): Product {
   const storage = product.storage?.[storageIndex];
   const color = product.colors[colorIndex];
   if (!product.storage) {
     if (product.colors.length < 2 || !color) return product;
-    return { ...product, id: `${product.id}--0--${colorIndex}`, baseId: product.id, image: color.image ?? product.image, colors: [color], subtitle: `${product.subtitle} · ${color.name}` };
+    return { ...product, id: `${product.id}--0--${colorIndex}`, baseId: product.id, image: color.image ?? (colorIndex === 0 ? product.image : ""), colors: [color], subtitle: `${product.subtitle} · ${color.name}` };
   }
   if (!storage || !color) return { ...product, available: false };
   return {
@@ -375,7 +377,7 @@ export function variantProduct(product: Product, storageIndex = 0, colorIndex = 
     price: storage.price ?? product.price,
     originalPrice: storage.originalPrice ?? product.originalPrice,
     available: storage.available,
-    image: color.image ?? product.image,
+    image: color.image ?? (colorIndex === 0 ? product.image : ""),
     colors: [color],
   };
 }

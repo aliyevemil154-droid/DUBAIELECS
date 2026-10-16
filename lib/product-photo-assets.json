@@ -1,0 +1,74 @@
+[
+  {
+    "productId": "bose-qc45",
+    "color": "Midnight Blue",
+    "path": "/images/products/bose-qc45-midnight-blue.webp",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/GreatStackDev/QuickCart@main/assets/bose_headphone_image.png",
+    "width": 640,
+    "height": 640,
+    "sha256": "c9a436511039108757f35d7717460bd673aaaf775b5fcc8238eaab7d70608dbd"
+  },
+  {
+    "productId": "galaxy-s23",
+    "color": "Lavender",
+    "path": "/images/products/galaxy-s23-lavender.webp",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/GreatStackDev/QuickCart@main/assets/samsung_s23phone_image.png",
+    "width": 640,
+    "height": 640,
+    "sha256": "2e0c79f8fe55555730c6c873f502ab4b7831ccafc07750482fbbe0317f775905"
+  },
+  {
+    "productId": "airpods-pro-2",
+    "color": "White",
+    "path": "/images/products/airpods-pro-2-white.webp",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/GreatStackDev/QuickCart@main/assets/apple_earphone_image.png",
+    "width": 640,
+    "height": 640,
+    "sha256": "7803b1a652bbe63489023c8bbbfdd03a895a4ae2f560cbf440f792063e3c9e94"
+  },
+  {
+    "productId": "canon-eos-r5",
+    "color": "Black",
+    "path": "/images/products/canon-eos-r5-black.webp",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/GreatStackDev/QuickCart@main/assets/cannon_camera_image.png",
+    "width": 640,
+    "height": 640,
+    "sha256": "64329d8391a5ab22f6aec49f6e329312f869c7fef5f812f25c855a2ce7c86ce3"
+  },
+  {
+    "productId": "sony-wf-1000xm4",
+    "color": "Black",
+    "path": "/images/products/sony-wf-1000xm4-black.webp",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/GreatStackDev/QuickCart@main/assets/sony_airbuds_image.png",
+    "width": 640,
+    "height": 640,
+    "sha256": "196d850be010d19c3a4bc4b01c641cf405f081edc8aa5be301c3ba9c6f350ca1"
+  },
+  {
+    "productId": "asus-rog-g16",
+    "color": "Eclipse Gray",
+    "path": "/images/products/asus-rog-g16-eclipse-gray.webp",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/GreatStackDev/QuickCart@main/assets/asus_laptop_image.png",
+    "width": 640,
+    "height": 640,
+    "sha256": "620c0fb61d47cf986de662418875fc62d0f62e4e1c0ad9d2801a0a7269c628e8"
+  },
+  {
+    "productId": "garmin-smartwatch",
+    "color": "Black",
+    "path": "/images/products/garmin-smartwatch-black.webp",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/GreatStackDev/QuickCart@main/assets/venu_watch_image.png",
+    "width": 640,
+    "height": 640,
+    "sha256": "529ddcfec4b2b2217bd610b011f13e25a0172fb9e1654084cc75c02f077e12a0"
+  },
+  {
+    "productId": "samsung-freestyle",
+    "color": "White",
+    "path": "/images/products/samsung-freestyle-white.webp",
+    "sourceUrl": "https://cdn.jsdelivr.net/gh/GreatStackDev/QuickCart@main/assets/projector_image.png",
+    "width": 640,
+    "height": 640,
+    "sha256": "695c89503c38a22e80330fcf1aef3d3d3b9d42a4df6cd5e30e48f737c00a1385"
+  }
+]

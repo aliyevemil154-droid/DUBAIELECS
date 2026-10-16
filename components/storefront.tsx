@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "./product-image";
+import ProductCard from "./product-card";
 import {
   ArrowDown,
   ArrowRight,
@@ -321,85 +322,6 @@ export default function Storefront() {
     }
   }
 
-  const productCard = (product: Product) => {
-    const colorIndex = cardColors[product.id] ?? 0;
-    const cardProduct = variantProduct(product, Math.max(0, product.storage?.findIndex((s) => s.available) ?? 0), colorIndex);
-    return (
-    <article className="product-card" key={product.id}>
-      <div className="product-visual">
-        {product.badge && (
-          <span className="product-badge">
-            <Sparkles size={11} /> {product.originalPrice ? `${Math.round((1 - product.price / product.originalPrice) * 100)}% OFF` : product.badge}
-          </span>
-        )}
-        <button
-          className={`favorite-button ${wishlist.includes(product.id) ? "is-saved" : ""}`}
-          onClick={() => toggleWishlist(product.id)}
-          aria-label={`${wishlist.includes(product.id) ? "Remove" : "Save"} ${product.name} ${wishlist.includes(product.id) ? "from" : "to"} wishlist`}
-          aria-pressed={wishlist.includes(product.id)}
-        >
-          <Heart size={18} />
-        </button>
-        <button
-          className="product-image-button"
-          onClick={() => openProduct(product)}
-          aria-label={`View ${product.name}`}
-        >
-          <Image
-            src={cardProduct.image}
-            alt={`${product.name} in ${product.colors[colorIndex].name}`}
-            width={420}
-            height={420}
-            sizes="(max-width: 600px) 45vw, (max-width: 1000px) 30vw, 280px"
-            className="product-image"
-          />
-        </button>
-        <button className="quick-view" onClick={() => openProduct(product)}>
-          A closer look <ArrowUpRight size={14} />
-        </button>
-      </div>
-      <div className="product-info">
-        <p className="product-category">{product.category}</p>
-        {product.registration && <span className="registration-label">{product.registration}</span>}
-        {product.stock !== undefined && <span className="stock-label">stokda {product.stock} ədəd qalıb</span>}
-        <button className="product-name" onClick={() => openProduct(product)}>
-          {product.name}
-        </button>
-        <p className="product-subtitle">{cardProduct.subtitle}</p>
-        <div className="product-bottom">
-          <div>
-            <span className="product-price">
-              {price(product.price, currency)}
-            </span>
-            {product.originalPrice && <del className="original-price">{price(product.originalPrice, currency)}</del>}
-            <div className="color-dots">
-              {product.colors.map((color, index) => (
-                <button
-                  type="button"
-                  className={`color-swatch ${colorIndex === index ? "selected" : ""}`}
-                  key={color.name}
-                  style={{ backgroundColor: color.value }}
-                  title={color.name}
-                  aria-label={`${product.name}: ${color.name}`}
-                  aria-pressed={colorIndex === index}
-                  onClick={() => setCardColors((current) => ({ ...current, [product.id]: index }))}
-                />
-              ))}
-              <span className="color-label">{product.colors[colorIndex].name}</span>
-            </div>
-          </div>
-          <button
-            className="add-button"
-            aria-label={`Add ${product.name} to bag`}
-            onClick={() => product.storage ? openProduct(product) : addToCart(product)}
-          >
-            <Plus size={21} />
-          </button>
-        </div>
-      </div>
-    </article>
-    );
-  };
 
   return (
     <>
@@ -536,7 +458,7 @@ export default function Storefront() {
             <div className="hero-word">closer.</div>
             <Image
               src={products[0].image}
-              alt="iPhone 18 Pro in Burgundy — official product photo"
+              alt="iPhone 18 Pro in Burgundy"
               width={850}
               height={850}
               className="hero-product"
@@ -685,7 +607,12 @@ export default function Storefront() {
           )}
           <div className="product-grid">
             {saleOnly && <button className="sale-filter-reset" onClick={() => setSaleOnly(false)}>Showing all offers · Show all products <X size={14} /></button>}
-            {filteredProducts.map(productCard)}
+            {filteredProducts.map((product) => <ProductCard
+              key={product.id} product={product} colorIndex={cardColors[product.id] ?? 0}
+              saved={wishlist.includes(product.id)} formatPrice={(amount) => price(amount, currency)}
+              onColorChange={(index) => setCardColors((current) => ({ ...current, [product.id]: index }))}
+              onOpen={() => openProduct(product)} onFavorite={() => toggleWishlist(product.id)} onAdd={addToCart}
+            />)}
           </div>
           {!filteredProducts.length && (
             <div className="empty-state">
@@ -1062,7 +989,7 @@ export default function Storefront() {
                     <article className="cart-item" key={item.id}>
                       <Image
                         src={product.image}
-                        alt={product.name}
+                        alt={`${product.name} in ${product.colors[0].name}`}
                         width={105}
                         height={105}
                       />
@@ -1175,7 +1102,7 @@ export default function Storefront() {
                     <button onClick={() => openProduct(product)}>
                       <Image
                         src={product.image}
-                        alt={product.name}
+                        alt={`${product.name} in ${product.colors[0].name}`}
                         width={100}
                         height={100}
                       />
@@ -1218,7 +1145,6 @@ export default function Storefront() {
         <Dialog onClose={() => setModal(null)} className="product-dialog">
           <div className="product-detail-image">
             <Image
-              key={activeProduct.image}
               src={activeProduct.image}
               alt={`${selectedProduct.name} in ${activeProduct.colors[0].name}`}
               width={650}
@@ -1240,7 +1166,7 @@ export default function Storefront() {
             </p>
             {selectedProduct.originalPrice && <p className="detail-sale"><del>{price(activeProduct.originalPrice ?? selectedProduct.originalPrice, currency)}</del><span>{Math.round((1 - activeProduct.price / (activeProduct.originalPrice ?? selectedProduct.originalPrice)) * 100)}% OFF · Save {price((activeProduct.originalPrice ?? selectedProduct.originalPrice) - activeProduct.price, currency)}</span></p>}
             {selectedProduct.storage && <fieldset className="variant-fieldset"><legend>{selectedProduct.optionLabel ?? "Storage"}</legend><div className="storage-options">{selectedProduct.storage.map((storage, index) => <button type="button" key={storage.name} disabled={!storage.available} aria-pressed={selectedStorage === index} onClick={() => setSelectedStorage(index)} className={selectedStorage === index ? "selected" : ""}><strong>{storage.name}</strong><small>{storage.available && storage.price !== null ? price(storage.price, currency) : "Unavailable"}</small></button>)}</div></fieldset>}
-            <fieldset className="variant-fieldset"><legend>Color: <strong aria-live="polite">{activeProduct.colors[0].name}</strong></legend><div className="detail-colors">{selectedProduct.colors.map((color, index) => <button key={color.name} type="button" title={color.name} aria-label={`Select ${color.name}`} aria-pressed={selectedColor === index} onClick={() => setSelectedColor(index)} className={`detail-color ${selectedColor === index ? "selected" : ""}`}><span style={{ backgroundColor: color.value }} />{color.name}</button>)}</div></fieldset>
+            <fieldset className="variant-fieldset"><legend>Color: <strong aria-live="polite">{activeProduct.colors[0].name}</strong></legend><div className="detail-colors">{selectedProduct.colors.map((color, index) => <button key={color.name} type="button" title={color.name} aria-label={`Select ${color.name}`} aria-pressed={selectedColor === index} onClick={() => { setSelectedColor(index); setCardColors((current) => ({ ...current, [selectedProduct.id]: index })); }} className={`detail-color ${selectedColor === index ? "selected" : ""}`}><span style={{ backgroundColor: color.value }} />{color.name}</button>)}</div></fieldset>
             {selectedProduct.illustration && <p className="illustration-note">Illustrative preview. {selectedProduct.storage ? "Colors follow Apple’s official Pro lineup. Screen colors may vary from the physical finish." : "Included attachments and regional packaging may vary."}</p>}
             {selectedProduct.photoNote && <p className="illustration-note">{selectedProduct.photoNote}</p>}
             <ul className="spec-list">

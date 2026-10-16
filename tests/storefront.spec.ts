@@ -1,10 +1,10 @@
 import { test, expect, type Page } from "@playwright/test";
+import { products } from "../lib/catalog";
 import { mkdir } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 
-// Exercise real fallback behavior when the workspace cannot reach manufacturer CDNs.
-// No substitute product image is supplied; full photo-loading tests remain enabled by default.
+// Approved product photos are bundled locally. Missing exact finishes use an explicit fallback.
 const browserExceptions = new WeakMap<Page, string[]>();
 test.beforeEach(async ({ page }) => {
   const exceptions: string[] = [];
@@ -38,10 +38,9 @@ async function expectNoHorizontalOverflow(page: Page) {
   ).toBe(true);
 }
 
-test("the storefront has working images, no browser errors, and fits the viewport", async ({
+test("bundled storefront images load without browser errors and the layout fits the viewport", async ({
   page,
 }, testInfo) => {
-  test.skip(process.env.PHOTO_NETWORK_BLOCKED === "1", "The cloud allowlist blocks official photo CDNs; image loading must be checked in an environment with manufacturer-host access.");
   const browserErrors: string[] = [];
   page.on("pageerror", (error) => browserErrors.push(error.message));
   page.on("console", (message) => {
@@ -558,14 +557,16 @@ test("Pro color and storage choices update artwork and survive bag and checkout 
   await openStore(page);
   const card = page.locator(".product-card").filter({ has: page.getByRole("button", { name: "iPhone 18 Pro", exact: true }) }).first();
   await card.getByRole("button", { name: "iPhone 18 Pro: Glacier", exact: true }).click();
-  await expect(card.locator(".product-image")).toHaveAttribute("src", /color_glacier/);
+  await expect(card.locator(".product-image")).toHaveAttribute("data-photo-state", products[0].colors[3].image ? "ready" : "unavailable");
+  await expect(card.locator(".color-label")).toHaveText("Glacier");
   await card.getByRole("button", { name: "View iPhone 18 Pro", exact: true }).click();
   const dialog = page.getByRole("dialog");
   await expect(dialog.getByRole("button", { name: "Select Glacier" })).toHaveAttribute("aria-pressed", "true");
   await dialog.getByRole("button", { name: /512 GB/ }).click();
   await expect(dialog.locator(".detail-price")).toContainText("1,950 AZN");
   await dialog.getByRole("button", { name: "Select Burgundy" }).click();
-  await expect(dialog.locator(".product-detail-image img")).toHaveAttribute("src", /color_burgundy/);
+  await expect(dialog.locator(".product-detail-image .product-photo")).toHaveAttribute("data-photo-state", products[0].image ? "ready" : "unavailable");
+  await expect(dialog.getByRole("button", { name: "Select Burgundy" })).toHaveAttribute("aria-pressed", "true");
   await dialog.getByRole("button", { name: "Add to your bag", exact: true }).click();
   await dialog.getByRole("button", { name: "Close dialog" }).click();
   await page.reload();
@@ -612,7 +613,8 @@ test("Samsung storage and all official color options keep the 30% sale correct",
   await expect(dialog.locator(".detail-price")).not.toHaveText(initialPrice);
   await expect(dialog.locator(".detail-sale")).toContainText("30% OFF");
   await dialog.getByRole("button", { name: "Select Pink Gold", exact: true }).click();
-  await expect(dialog.locator(".product-detail-image img")).toHaveAttribute("src", /Pink-Gold/);
+  await expect(dialog.getByRole("button", { name: "Select Pink Gold", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await expect(dialog.locator(".product-detail-image .product-photo")).toHaveAttribute("data-photo-state", products.find((p) => p.id === "galaxy-s26-ultra")!.colors[5].image ? "ready" : "unavailable");
   await dialog.getByRole("button", { name: "Add to your bag", exact: true }).click();
   await dialog.getByRole("button", { name: "Close dialog" }).click();
   await page.getByRole("button", { name: "Shopping bag, 1 item", exact: true }).click();

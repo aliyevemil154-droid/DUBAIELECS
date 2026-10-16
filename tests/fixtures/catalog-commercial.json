@@ -1,0 +1,672 @@
+[
+  {
+    "id": "iphone-18-pro",
+    "name": "iPhone 18 Pro",
+    "subtitle": "256 GB · Burgundy",
+    "category": "Smartphones",
+    "price": 1874,
+    "badge": "New arrival",
+    "registration": "QEYDIYYATSIZ",
+    "colors": [
+      {
+        "name": "Burgundy",
+        "value": "#722f46"
+      },
+      {
+        "name": "Black",
+        "value": "#292c32"
+      },
+      {
+        "name": "Silver",
+        "value": "#c2c6cd"
+      },
+      {
+        "name": "Glacier",
+        "value": "#d0e1e7"
+      }
+    ],
+    "storage": [
+      {
+        "name": "256 GB",
+        "price": 1874,
+        "available": true
+      },
+      {
+        "name": "512 GB",
+        "price": 1950,
+        "available": true
+      }
+    ],
+    "specs": [
+      "Choose 256 GB or 512 GB",
+      "6.3-inch Super Retina XDR display",
+      "QEYDIYYATSIZ · Device registration not included"
+    ],
+    "featured": true
+  },
+  {
+    "id": "iphone-18-pro-max",
+    "name": "iPhone 18 Pro Max",
+    "subtitle": "512 GB · Burgundy",
+    "category": "Smartphones",
+    "price": 2179,
+    "badge": "New arrival",
+    "registration": "QEYDIYYATSIZ",
+    "colors": [
+      {
+        "name": "Burgundy",
+        "value": "#722f46"
+      },
+      {
+        "name": "Black",
+        "value": "#292c32"
+      },
+      {
+        "name": "Silver",
+        "value": "#c2c6cd"
+      },
+      {
+        "name": "Glacier",
+        "value": "#d0e1e7"
+      }
+    ],
+    "storage": [
+      {
+        "name": "256 GB",
+        "price": null,
+        "available": false
+      },
+      {
+        "name": "512 GB",
+        "price": 2179,
+        "available": true
+      }
+    ],
+    "specs": [
+      "256 GB unavailable",
+      "6.9-inch Super Retina XDR display",
+      "QEYDIYYATSIZ · Device registration not included"
+    ],
+    "featured": true
+  },
+  {
+    "id": "dyson-hair-dryer",
+    "name": "Dyson Supersonic Nural",
+    "subtitle": "Intelligent hair dryer",
+    "category": "Hair care",
+    "price": 489,
+    "badge": "Limited stock",
+    "stock": 4,
+    "colors": [
+      {
+        "name": "Ceramic Pink / Rose Gold",
+        "value": "#d69fa6"
+      }
+    ],
+    "specs": [
+      "Scalp protect mode",
+      "Automatic pause detection",
+      "Intelligent heat control"
+    ],
+    "featured": true
+  },
+  {
+    "id": "galaxy-s25-ultra",
+    "name": "Samsung Galaxy S25 Ultra",
+    "category": "Smartphones",
+    "subtitle": "256 GB · Titanium Silverblue",
+    "price": 1546.99,
+    "originalPrice": 2209.98,
+    "badge": "30% OFF",
+    "colors": [
+      {
+        "name": "Titanium Silverblue",
+        "value": "#a7b7c7"
+      },
+      {
+        "name": "Titanium Black",
+        "value": "#42454a"
+      },
+      {
+        "name": "Titanium Gray",
+        "value": "#9b9790"
+      },
+      {
+        "name": "Titanium Whitesilver",
+        "value": "#d8dcdb"
+      },
+      {
+        "name": "Titanium Jetblack",
+        "value": "#242527"
+      },
+      {
+        "name": "Titanium Jadegreen",
+        "value": "#b4c5b4"
+      },
+      {
+        "name": "Titanium Pinkgold",
+        "value": "#d8bfb9"
+      }
+    ],
+    "storage": [
+      {
+        "name": "256 GB",
+        "originalPrice": 2209.98,
+        "price": 1546.99,
+        "available": true
+      },
+      {
+        "name": "512 GB",
+        "originalPrice": 2413.98,
+        "price": 1689.79,
+        "available": true
+      },
+      {
+        "name": "1 TB",
+        "originalPrice": 2821.98,
+        "price": 1975.39,
+        "available": true
+      }
+    ],
+    "specs": [
+      "6.9-inch Dynamic AMOLED 2X display",
+      "200 MP main camera",
+      "S Pen included",
+      "Samsung.com-exclusive finishes included"
+    ],
+    "optionLabel": "Storage",
+    "featured": true
+  },
+  {
+    "id": "galaxy-s26-ultra",
+    "name": "Samsung Galaxy S26 Ultra",
+    "category": "Smartphones",
+    "subtitle": "256 GB · Cobalt Violet",
+    "price": 1546.99,
+    "originalPrice": 2209.98,
+    "badge": "30% OFF",
+    "colors": [
+      {
+        "name": "Cobalt Violet",
+        "value": "#7b7492"
+      },
+      {
+        "name": "Sky Blue",
+        "value": "#b1cbdc"
+      },
+      {
+        "name": "Black",
+        "value": "#303136"
+      },
+      {
+        "name": "White",
+        "value": "#ecece7"
+      },
+      {
+        "name": "Silver Shadow",
+        "value": "#b5b8bf"
+      },
+      {
+        "name": "Pink Gold",
+        "value": "#dcbdb2"
+      }
+    ],
+    "storage": [
+      {
+        "name": "256 GB",
+        "originalPrice": 2209.98,
+        "price": 1546.99,
+        "available": true
+      },
+      {
+        "name": "512 GB",
+        "originalPrice": 2549.98,
+        "price": 1784.99,
+        "available": true
+      },
+      {
+        "name": "1 TB",
+        "originalPrice": 3059.98,
+        "price": 2141.99,
+        "available": true
+      }
+    ],
+    "specs": [
+      "256 GB, 512 GB or 1 TB",
+      "200 MP main camera",
+      "Built-in S Pen",
+      "Six official finishes, including online-exclusive colors"
+    ],
+    "optionLabel": "Storage",
+    "featured": true
+  },
+  {
+    "id": "macbook-air-13-m5",
+    "name": "MacBook Air 13-inch M5",
+    "category": "Laptops",
+    "subtitle": "16 GB / 512 GB · Sky Blue",
+    "price": 1307.81,
+    "originalPrice": 1868.3,
+    "badge": "30% OFF",
+    "colors": [
+      {
+        "name": "Sky Blue",
+        "value": "#b6cad9"
+      },
+      {
+        "name": "Midnight",
+        "value": "#303c49"
+      },
+      {
+        "name": "Starlight",
+        "value": "#e5dac9"
+      },
+      {
+        "name": "Silver",
+        "value": "#cfd0d2"
+      }
+    ],
+    "storage": [
+      {
+        "name": "16 GB / 512 GB",
+        "originalPrice": 1868.3,
+        "price": 1307.81,
+        "available": true
+      },
+      {
+        "name": "16 GB / 1 TB",
+        "originalPrice": 2208.3,
+        "price": 1545.81,
+        "available": true
+      },
+      {
+        "name": "24 GB / 1 TB",
+        "originalPrice": 2548.3,
+        "price": 1783.81,
+        "available": true
+      }
+    ],
+    "specs": [
+      "13.6-inch Liquid Retina display",
+      "Apple M5 chip",
+      "Fanless aluminum design",
+      "Four official finishes"
+    ],
+    "optionLabel": "Memory & storage",
+    "featured": true
+  },
+  {
+    "id": "macbook-air-15-m5",
+    "name": "MacBook Air 15-inch M5",
+    "category": "Laptops",
+    "subtitle": "16 GB / 512 GB · Sky Blue",
+    "price": 1545.81,
+    "originalPrice": 2208.3,
+    "badge": "30% OFF",
+    "colors": [
+      {
+        "name": "Sky Blue",
+        "value": "#b6cad9"
+      },
+      {
+        "name": "Midnight",
+        "value": "#303c49"
+      },
+      {
+        "name": "Starlight",
+        "value": "#e5dac9"
+      },
+      {
+        "name": "Silver",
+        "value": "#cfd0d2"
+      }
+    ],
+    "storage": [
+      {
+        "name": "16 GB / 512 GB",
+        "originalPrice": 2208.3,
+        "price": 1545.81,
+        "available": true
+      },
+      {
+        "name": "16 GB / 1 TB",
+        "originalPrice": 2548.3,
+        "price": 1783.81,
+        "available": true
+      },
+      {
+        "name": "24 GB / 1 TB",
+        "originalPrice": 2888.3,
+        "price": 2021.81,
+        "available": true
+      }
+    ],
+    "specs": [
+      "15.3-inch Liquid Retina display",
+      "Apple M5 chip",
+      "Six-speaker sound system",
+      "MagSafe charging"
+    ],
+    "optionLabel": "Memory & storage",
+    "featured": true
+  },
+  {
+    "id": "macbook-pro-14-m5",
+    "name": "MacBook Pro 14-inch M5",
+    "category": "Laptops",
+    "subtitle": "16 GB / 1 TB · Space Black",
+    "price": 2021.81,
+    "originalPrice": 2888.3,
+    "badge": "30% OFF",
+    "colors": [
+      {
+        "name": "Space Black",
+        "value": "#424344"
+      },
+      {
+        "name": "Silver",
+        "value": "#cfd0d2"
+      }
+    ],
+    "storage": [
+      {
+        "name": "16 GB / 1 TB",
+        "originalPrice": 2888.3,
+        "price": 2021.81,
+        "available": true
+      },
+      {
+        "name": "24 GB / 1 TB",
+        "originalPrice": 3228.3,
+        "price": 2259.81,
+        "available": true
+      },
+      {
+        "name": "32 GB / 1 TB",
+        "originalPrice": 3568.3,
+        "price": 2497.81,
+        "available": true
+      }
+    ],
+    "specs": [
+      "14.2-inch Liquid Retina XDR display",
+      "Apple M5 chip",
+      "Standard display",
+      "Space Black or Silver"
+    ],
+    "optionLabel": "Memory & storage",
+    "featured": true
+  },
+  {
+    "id": "macbook-pro-16-m5-pro",
+    "name": "MacBook Pro 16-inch M5 Pro",
+    "category": "Laptops",
+    "subtitle": "24 GB / 1 TB · Space Black",
+    "price": 3211.81,
+    "originalPrice": 4588.3,
+    "badge": "30% OFF",
+    "colors": [
+      {
+        "name": "Space Black",
+        "value": "#424344"
+      },
+      {
+        "name": "Silver",
+        "value": "#cfd0d2"
+      }
+    ],
+    "storage": [
+      {
+        "name": "24 GB / 1 TB",
+        "originalPrice": 4588.3,
+        "price": 3211.81,
+        "available": true
+      },
+      {
+        "name": "48 GB / 1 TB",
+        "originalPrice": 5268.3,
+        "price": 3687.81,
+        "available": true
+      }
+    ],
+    "specs": [
+      "16.2-inch Liquid Retina XDR display",
+      "Apple M5 Pro chip",
+      "Standard display",
+      "Space Black or Silver"
+    ],
+    "optionLabel": "Memory & storage",
+    "featured": true
+  },
+  {
+    "id": "macbook-pro-m2",
+    "name": "MacBook Pro M2",
+    "subtitle": "13-inch · 8 GB / 256 GB",
+    "category": "Laptops",
+    "price": 1749.3,
+    "originalPrice": 2499,
+    "colors": [
+      {
+        "name": "Space Gray",
+        "value": "#8d8f91"
+      }
+    ],
+    "specs": [
+      "13.3-inch Retina display",
+      "Apple M2 chip",
+      "8 GB unified memory",
+      "256 GB SSD"
+    ],
+    "featured": true
+  },
+  {
+    "id": "bose-qc45",
+    "name": "Bose QuietComfort 45",
+    "subtitle": "Wireless noise-cancelling headphones",
+    "category": "Audio",
+    "price": 274.5,
+    "originalPrice": 549,
+    "colors": [
+      {
+        "name": "Midnight Blue",
+        "value": "#303848"
+      }
+    ],
+    "specs": [
+      "Active noise cancellation",
+      "Bluetooth wireless audio",
+      "Up to 24 hours of battery life",
+      "USB-C charging"
+    ],
+    "featured": true
+  },
+  {
+    "id": "galaxy-s23",
+    "name": "Samsung Galaxy S23",
+    "subtitle": "128 GB · Lavender",
+    "category": "Smartphones",
+    "price": 699.5,
+    "originalPrice": 1399,
+    "colors": [
+      {
+        "name": "Lavender",
+        "value": "#beb2cc"
+      }
+    ],
+    "specs": [
+      "6.1-inch Dynamic AMOLED 2X display",
+      "128 GB storage",
+      "50 MP wide camera",
+      "Snapdragon 8 Gen 2 for Galaxy"
+    ],
+    "featured": true
+  },
+  {
+    "id": "airpods-pro-2",
+    "name": "AirPods Pro 2",
+    "subtitle": "Wireless earbuds · USB-C case",
+    "category": "Audio",
+    "price": 224.5,
+    "originalPrice": 449,
+    "colors": [
+      {
+        "name": "White",
+        "value": "#f5f5f4"
+      }
+    ],
+    "specs": [
+      "Active noise cancellation",
+      "Adaptive Audio",
+      "USB-C MagSafe charging case",
+      "Up to 6 hours of listening time"
+    ],
+    "featured": true
+  },
+  {
+    "id": "playstation-5-disc",
+    "name": "PlayStation 5",
+    "subtitle": "Slim Disc edition · 1 TB",
+    "category": "Gaming",
+    "price": 549.5,
+    "originalPrice": 1099,
+    "colors": [
+      {
+        "name": "White",
+        "value": "#e6e7e9"
+      }
+    ],
+    "specs": [
+      "1 TB SSD",
+      "Ultra HD Blu-ray disc drive",
+      "DualSense wireless controller",
+      "4K gaming support"
+    ],
+    "featured": true
+  },
+  {
+    "id": "canon-eos-r5",
+    "name": "Canon EOS R5",
+    "subtitle": "45 MP full-frame mirrorless camera",
+    "category": "Cameras",
+    "price": 4758.81,
+    "originalPrice": 6798.3,
+    "badge": "30% OFF",
+    "colors": [
+      {
+        "name": "Black",
+        "value": "#28282b"
+      }
+    ],
+    "specs": [
+      "45 MP full-frame sensor",
+      "8K video recording",
+      "RF lens mount"
+    ],
+    "featured": false
+  },
+  {
+    "id": "sony-wf-1000xm4",
+    "name": "Sony WF-1000XM4",
+    "subtitle": "Wireless noise-cancelling earbuds",
+    "category": "Audio",
+    "price": 333.19,
+    "originalPrice": 475.98,
+    "badge": "30% OFF",
+    "colors": [
+      {
+        "name": "Black",
+        "value": "#252827"
+      }
+    ],
+    "specs": [
+      "Active noise cancellation",
+      "Wireless charging case",
+      "Bluetooth audio"
+    ],
+    "featured": false
+  },
+  {
+    "id": "asus-rog-g16",
+    "name": "ASUS ROG Zephyrus G16",
+    "subtitle": "16-inch gaming laptop",
+    "category": "Laptops",
+    "price": 2617.99,
+    "originalPrice": 3739.98,
+    "badge": "30% OFF",
+    "colors": [
+      {
+        "name": "Eclipse Gray",
+        "value": "#55565d"
+      }
+    ],
+    "specs": [
+      "16-inch display",
+      "ROG gaming laptop",
+      "Backlit keyboard"
+    ],
+    "featured": false
+  },
+  {
+    "id": "garmin-smartwatch",
+    "name": "Garmin GPS smartwatch",
+    "subtitle": "Fitness & everyday activity",
+    "category": "Wearables",
+    "price": 475.99,
+    "originalPrice": 679.98,
+    "badge": "30% OFF",
+    "colors": [
+      {
+        "name": "Black",
+        "value": "#303238"
+      }
+    ],
+    "specs": [
+      "GPS activity tracking",
+      "Heart rate monitoring",
+      "Touchscreen"
+    ],
+    "featured": false
+  },
+  {
+    "id": "samsung-freestyle",
+    "name": "Samsung The Freestyle",
+    "subtitle": "Portable smart projector",
+    "category": "Home cinema",
+    "price": 951.99,
+    "originalPrice": 1359.98,
+    "badge": "30% OFF",
+    "colors": [
+      {
+        "name": "White",
+        "value": "#ecebe5"
+      }
+    ],
+    "specs": [
+      "Full HD projection",
+      "Compact adjustable design",
+      "Built-in speaker"
+    ],
+    "featured": false
+  },
+  {
+    "id": "xbox-wireless-controller",
+    "name": "Xbox Wireless Controller",
+    "subtitle": "Wireless controller · Robot White",
+    "category": "Gaming",
+    "price": 77.34,
+    "originalPrice": 110.48,
+    "badge": "30% OFF",
+    "colors": [
+      {
+        "name": "Robot White",
+        "value": "#e9e9e7"
+      }
+    ],
+    "specs": [
+      "Textured grip",
+      "Dedicated Share button",
+      "Bluetooth connectivity"
+    ],
+    "featured": false
+  }
+]

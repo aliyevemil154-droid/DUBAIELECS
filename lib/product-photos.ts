@@ -1,28 +1,32 @@
-// Original manufacturer photo URLs. No generated or recolored product imagery.
-// See public/images/SOURCES.md for provenance and deployment notes.
-const apple = "https://www.apple.com/v/iphone-18-pro/c/images/overview/product-viewer/";
-export const phonePhotos = {
-  Burgundy: `${apple}color_burgundy__f95it7a6dnyq_large.jpg`,
-  Black: `${apple}color_black__dseo2tvypuc2_large.jpg`,
-  Silver: `${apple}color_silver__c0oudn0fzw4m_large.jpg`,
-  Glacier: `${apple}color_glacier__fkxlpbz0ruy6_large.jpg`,
-};
-export const proMaxHero = "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-compare-iphone-18-pro-202609?.v=M0dlUVBobHVpY1h1dmlaR3RZekpEMEhRUmlKNkhhdE80VTZIL1ZUdjd2eUpxQWhXdDZiUERGcnlNZW9hNkhxRmJPbDJJWDFrVGJEYlIxTitTcHhVWldHUUw4RnF3MmwyMUVGYm13ODRTWXlINUhveGhFc1lXWld4RkQ2dkFBMi8&fmt=png-alpha&hei=512&wid=400";
-export const dysonPhoto = "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/primary-locale/en_US/598973-01.png?fmt=png-alpha&wid=800";
-export const airPhotos = {
-  "Sky Blue": "https://www.apple.com/v/macbook-air/z/images/overview/design/color/design_top_skyblue__eepkvlvjzcia_large.jpg",
-  Midnight: "https://www.apple.com/v/macbook-air/z/images/overview/design/color/design_top_midnight__fvf2p6124tqq_large.jpg",
-  Starlight: "https://www.apple.com/v/macbook-air/z/images/overview/design/color/design_top_starlight__dtojfd6ibywm_large.jpg",
-  Silver: "https://www.apple.com/v/macbook-air/z/images/overview/design/color/design_top_silver__dcf8hwixw2uu_large.jpg",
-};
-export const macProPhotos = {
-  "Space Black": "https://www.apple.com/v/macbook-pro/ax/images/overview/product-viewer/pv_colors_spaceblack__dwfpyrbaf4cy_large.jpg",
-  Silver: "https://www.apple.com/v/macbook-pro/ax/images/overview/product-viewer/pv_colors_silver__doa20s4tupaq_large.jpg",
-};
-export function samsungPhoto(series: "s25" | "s26", color: string) {
-  const root = "https://images.samsung.com/is/image/samsung/assets/uk/";
-  return series === "s25"
-    ? `${root}2501/smartphones/galaxy-s25-ultra/specs/p3_163x346_${color.replaceAll(" ", "")}.jpg`
-    : `${root}s2602/mpdp/Galaxy-S26-Ultra_${color.replaceAll(" ", "-")}_163x346.jpg`;
+import assets from "./product-photo-assets.json";
+
+export interface ProductPhotoAsset {
+  productId: string;
+  color: string;
+  path: string;
+  sourceUrl: string;
+  width: number;
+  height: number;
+  sha256: string;
 }
-export const playstationPhoto = "https://gmedia.playstation.com/is/image/SIEPDC/ps5-overview-console-blue-background-desktop-03-en-05nov25?fmt=webp&wid=900";
+
+export const productPhotoAssets: readonly ProductPhotoAsset[] = assets;
+const photos = new Map(productPhotoAssets.map((asset) => [`${asset.productId}:${asset.color}`, asset.path]));
+
+// Exact model AND finish matching. Never borrow an image from another finish,
+// another screen size, or a related model. Empty means an honest unavailable state.
+export function productPhoto(productId: string, color: string): string {
+  return photos.get(`${productId}:${color}`) ?? "";
+}
+export const phonePhotos = {
+  Burgundy: productPhoto("iphone-18-pro", "Burgundy"),
+  Black: productPhoto("iphone-18-pro", "Black"),
+  Silver: productPhoto("iphone-18-pro", "Silver"),
+  Glacier: productPhoto("iphone-18-pro", "Glacier"),
+};
+export const airPhotos = {
+  "Sky Blue": productPhoto("macbook-air-13-m5", "Sky Blue"),
+  Midnight: productPhoto("macbook-air-13-m5", "Midnight"),
+  Starlight: productPhoto("macbook-air-13-m5", "Starlight"),
+  Silver: productPhoto("macbook-air-13-m5", "Silver"),
+};

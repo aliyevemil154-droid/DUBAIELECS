@@ -13,15 +13,18 @@
     "typecheck": "tsc --noEmit",
     "test": "node --import tsx --test tests/*.test.ts",
     "test:e2e": "playwright test",
-    "start:backend": "node --import tsx backend/server.ts"
+    "start:backend": "node --import tsx backend/server.ts",
+    "photos:audit": "node --import tsx scripts/product-photos.ts audit",
+    "photos:download": "node --import tsx scripts/product-photos.ts download",
+    "photos:approve": "node --import tsx scripts/product-photos.ts approve"
   },
   "dependencies": {
+    "@fontsource-variable/inter": "^5.2.8",
+    "lucide-react": "^0.577.0",
     "next": "16.4.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "lucide-react": "^0.577.0",
     "stripe": "^20.0.0",
-    "@fontsource-variable/inter": "^5.2.8",
     "tsx": "^4.20.0"
   },
   "devDependencies": {
@@ -29,6 +32,7 @@
     "@types/node": "^24.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "sharp": "^0.35.5",
     "typescript": "^5.9.0"
   }
 }

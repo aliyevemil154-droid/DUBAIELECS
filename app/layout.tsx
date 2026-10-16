@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/inter";
 import "./globals.css";
+import "./products.css";
 
 export const metadata: Metadata = {
   title: {

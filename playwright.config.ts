@@ -26,6 +26,7 @@ export default defineConfig({
     reducedMotion: "reduce",
   },
   projects: [
+    { name: "tablet", testMatch: "**/product-presentation.spec.ts", use: { viewport: { width: 820, height: 1180 }, hasTouch: true } },
     { name: "desktop", use: { viewport: { width: 1440, height: 1000 } } },
     {
       name: "mobile",

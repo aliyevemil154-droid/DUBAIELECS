@@ -25,7 +25,7 @@ npm run build
 npm run start
 ```
 
-`npm run test:e2e` runs browser tests when Playwright browsers are installed. Fonts are bundled locally. New Apple, Samsung, Dyson and PlayStation product images use original manufacturer CDN URLs, optimized and cached by Next.js. The additional locally bundled photos retain their source license. See `public/images/SOURCES.md` for sources and `CATALOG.md` for reference pricing. Run browser image checks from an environment whose network permits the manufacturer hosts.
+`npm run test:e2e` runs the desktop/mobile shopping tests and complete category/finish presentation checks, including a tablet viewport. Fonts and approved product photos are bundled locally. `npm run photos:audit` lists approved files and missing finishes; `npm run photos:audit -- --strict` is the photography completion gate. Manufacturer downloads are currently blocked: 37 exact model/finish photos need replacements and display an explicit photo-unavailable state. See [the photography workflow](docs/product-photography.md) for required hosts and the download/review process, [sources](public/images/SOURCES.md) for image provenance, and `CATALOG.md` for existing reference pricing.
 
 ## Optional Stripe adapter
 
