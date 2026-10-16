@@ -8,7 +8,7 @@ echo Dubai Electronics - Windows launcher
 echo Keep this window open while using the website.
 echo.
 
-powershell.exe -NoLogo -NoProfile -Command "try { $page=Invoke-WebRequest -UseBasicParsing -Uri 'http://localhost:3000' -TimeoutSec 3; if ($page.StatusCode -eq 200 -and $page.Content.Contains('Dubai Electronics') -and $page.Content.Contains('Your next upgrade')) { Start-Process 'http://localhost:3000'; exit 0 }; exit 1 } catch { exit 1 }"
+powershell.exe -NoLogo -NoProfile -Command "try { $page=Invoke-WebRequest -UseBasicParsing -Uri 'http://localhost:3000' -TimeoutSec 3; if ($page.StatusCode -eq 200 -and $page.Content.Contains('Dubai Electronics') -and $page.Content.Contains('Exceptional tech')) { Start-Process 'http://localhost:3000'; exit 0 }; exit 1 } catch { exit 1 }"
 if not errorlevel 1 goto already_running
 
 node -e "process.exit(process.versions.node.split('.')[0] === '24' ? 0 : 1)" >nul 2>&1

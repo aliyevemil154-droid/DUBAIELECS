@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "./product-image";
 import {
   ArrowDown,
   ArrowRight,
@@ -27,12 +27,17 @@ import {
   Sparkles,
   Tablet,
   Wind,
+  Camera,
+  Watch,
+  Projector,
   Truck,
   X,
   Zap,
 } from "lucide-react";
 import { categories, getProduct, products, variantProduct, type Product } from "@/lib/catalog";
 import Dialog from "./dialog";
+import Select from "./select";
+import { airPhotos } from "@/lib/product-photos";
 
 type CartItem = { id: string; quantity: number };
 type Modal =
@@ -53,14 +58,17 @@ const icons = {
   Tablets: Tablet,
   Gaming: Gamepad2,
   "Hair care": Wind,
+  Cameras: Camera,
+  Wearables: Watch,
+  "Home cinema": Projector,
 };
 
+const wholePrice = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
+const decimalPrice = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 function price(value: number, currency: Currency = "AZN") {
-  const rate =
-    currency === "USD" ? 1 / 1.7 : currency === "AED" ? 3.6725 / 1.7 : 1;
-  const formatted = new Intl.NumberFormat("en-US", {
-    maximumFractionDigits: 2,
-  }).format(value * rate);
+  const rate = currency === "USD" ? 1 / 1.7 : currency === "AED" ? 3.6725 / 1.7 : 1;
+  const amount = Math.round(value * rate * 100) / 100;
+  const formatted = (Number.isInteger(amount) ? wholePrice : decimalPrice).format(amount);
   return `${formatted} ${currency === "AZN" ? "AZN" : currency === "USD" ? "$" : "AED"}`;
 }
 
@@ -87,6 +95,15 @@ export default function Storefront() {
   const [newsletterBusy, setNewsletterBusy] = useState(false);
   const [supportStatus, setSupportStatus] = useState("");
   const [supportBusy, setSupportBusy] = useState(false);
+  useEffect(() => {
+    const closeMenu = (event: Event) => {
+      const menu = document.querySelector<HTMLDetailsElement>(".shop-menu[open]");
+      if (menu && (event instanceof KeyboardEvent ? event.key === "Escape" : !menu.contains(event.target as Node))) menu.open = false;
+    };
+    document.addEventListener("pointerdown", closeMenu);
+    document.addEventListener("keydown", closeMenu);
+    return () => { document.removeEventListener("pointerdown", closeMenu); document.removeEventListener("keydown", closeMenu); };
+  }, []);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -206,7 +223,7 @@ export default function Storefront() {
     );
   }
   function openProduct(product: Product) {
-    setSelectedProduct(product);
+    setSelectedProduct(products.find((p) => p.id === (product.baseId ?? product.id)) ?? product);
     setSelectedStorage(Math.max(0, product.storage?.findIndex((s) => s.available) ?? 0));
     setSelectedColor(cardColors[product.id] ?? 0);
     setModal("product");
@@ -221,9 +238,9 @@ export default function Storefront() {
   }
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const subtotal = cart.reduce(
-    (sum, item) => sum + (getProduct(item.id)?.price ?? 0) * item.quantity,
+    (sum, item) => sum + Math.round((getProduct(item.id)?.price ?? 0) * 100) * item.quantity,
     0,
-  );
+  ) / 100;
   const filteredProducts = useMemo(() => {
     let list = products.filter(
       (product) =>
@@ -235,9 +252,11 @@ export default function Storefront() {
     );
     if (sort === "low") list = [...list].sort((a, b) => a.price - b.price);
     if (sort === "high") list = [...list].sort((a, b) => b.price - a.price);
+    if (sort === "new") list = [...list].sort((a, b) => Number(b.badge === "New arrival") - Number(a.badge === "New arrival"));
+    if (sort === "saving") list = [...list].sort((a, b) => ((b.originalPrice ?? b.price) - b.price) - ((a.originalPrice ?? a.price) - a.price));
     return showAll || category !== "All devices" || catalogSearch
       ? list
-      : list.slice(0, 4);
+      : list.slice(0, 8);
   }, [category, showAll, catalogSearch, sort, saleOnly]);
   const searchResults = products.filter((product) =>
     `${product.name} ${product.category}`
@@ -304,15 +323,13 @@ export default function Storefront() {
 
   const productCard = (product: Product) => {
     const colorIndex = cardColors[product.id] ?? 0;
-    const cardProduct = product.storage
-      ? variantProduct(product, Math.max(0, product.storage.findIndex((s) => s.available)), colorIndex)
-      : product;
+    const cardProduct = variantProduct(product, Math.max(0, product.storage?.findIndex((s) => s.available) ?? 0), colorIndex);
     return (
     <article className="product-card" key={product.id}>
       <div className="product-visual">
         {product.badge && (
           <span className="product-badge">
-            <Sparkles size={11} /> {product.originalPrice ? "50% OFF" : product.badge}
+            <Sparkles size={11} /> {product.originalPrice ? `${Math.round((1 - product.price / product.originalPrice) * 100)}% OFF` : product.badge}
           </span>
         )}
         <button
@@ -333,6 +350,7 @@ export default function Storefront() {
             alt={`${product.name} in ${product.colors[colorIndex].name}`}
             width={420}
             height={420}
+            sizes="(max-width: 600px) 45vw, (max-width: 1000px) 30vw, 280px"
             className="product-image"
           />
         </button>
@@ -409,9 +427,14 @@ export default function Storefront() {
             </span>
           </Link>
           <nav className="desktop-nav" aria-label="Main navigation">
-            <button onClick={() => browse()}>
-              Shop all <ChevronDown size={13} />
-            </button>
+            <details className="shop-menu">
+              <summary>Shop all <ChevronDown size={13} /></summary>
+              <div className="shop-menu-panel"><span className="select-caption">EXPLORE THE COLLECTION</span>
+                {["All devices", ...categories].map((name) => <button key={name} onClick={(event) => {
+                  browse(name); event.currentTarget.closest("details")?.removeAttribute("open");
+                }}>{name}<ArrowUpRight size={14} /></button>)}
+              </div>
+            </details>
             <a href="#featured">The spotlight</a>
             <a href="#story">Our story</a>
             <button onClick={() => setModal("delivery")}>
@@ -419,19 +442,11 @@ export default function Storefront() {
             </button>
           </nav>
           <div className="header-actions">
-            <label className="currency-picker">
-              <span className="sr-only">Display currency</span>
-              <select
-                aria-label="Display currency"
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value as Currency)}
-              >
-                <option value="AZN">AZN ₼</option>
-                <option value="USD">USD $</option>
-                <option value="AED">AED</option>
-              </select>
-              <ChevronDown size={12} />
-            </label>
+            <Select label="Display currency" compact value={currency} onChange={(value) => setCurrency(value as Currency)} options={[
+              { value: "AZN", label: "AZN ₼", description: "Azerbaijani manat" },
+              { value: "USD", label: "USD $", description: "Indicative US dollar conversion" },
+              { value: "AED", label: "AED", description: "Indicative UAE dirham conversion" },
+            ]} />
             <span className="header-divider" />
             <button
               className="icon-button"
@@ -469,7 +484,7 @@ export default function Storefront() {
         </div>
       </header>
 
-      <main id="main">
+      <main id="main" data-store-ready={hydrated}>
         <section className="hero container">
           <div className="hero-copy">
             <p className="eyebrow">
@@ -514,18 +529,18 @@ export default function Storefront() {
               <span>
                 <span className="live-dot" /> THE IPHONE 18 COLLECTION
               </span>
-              <span>01 — 09</span>
+              <span>THE NEW COLLECTION</span>
             </div>
             <div className="hero-orbit orbit-one" />
             <div className="hero-orbit orbit-two" />
             <div className="hero-word">closer.</div>
             <Image
-              src="/images/phone-burgundy.svg"
-              alt="Illustrative Burgundy smartphone color preview"
+              src={products[0].image}
+              alt="iPhone 18 Pro in Burgundy — official product photo"
               width={850}
               height={850}
               className="hero-product"
-              priority
+              preload
             />
             <div className="hero-tag">
               <Sparkles size={14} />
@@ -563,8 +578,8 @@ export default function Storefront() {
         </section>
 
         <section className="sale-ribbon container" aria-label="Sale collection">
-          <div><span className="sale-ribbon-tag">THE UPGRADE EDIT</span><h2>Extraordinary tech. Half the price.</h2><p>Save 50% on selected favorites. Your next upgrade starts here.</p></div>
-          <button className="button button-dark" onClick={() => { setCategory("All devices"); setSaleOnly(true); setShowAll(true); document.getElementById("shop")?.scrollIntoView({ behavior: "smooth" }); }}>Shop 50% offers <ArrowUpRight size={17} /></button>
+          <div><span className="sale-ribbon-tag">THE UPGRADE EDIT</span><h2>Your wish list. Upgraded.</h2><p>Save 30% on Samsung Ultras and MacBooks. Up to 50% on selected essentials.</p></div>
+          <button className="button button-dark" onClick={() => { setCategory("All devices"); setSaleOnly(true); setShowAll(true); document.getElementById("shop")?.scrollIntoView({ behavior: "smooth" }); }}>Explore all offers <ArrowUpRight size={17} /></button>
         </section>
         <div className="brand-strip container">
           <span>
@@ -622,6 +637,8 @@ export default function Storefront() {
                 aria-pressed={category === "All devices"}
                 onClick={() => {
                   setCategory("All devices");
+                  setSaleOnly(false);
+                  setShowAll(true);
                   setCatalogSearch("");
                 }}
               >
@@ -636,6 +653,8 @@ export default function Storefront() {
                     aria-pressed={category === cat}
                     onClick={() => {
                       setCategory(cat);
+                      setSaleOnly(false);
+                      setShowAll(true);
                       setCatalogSearch("");
                     }}
                   >
@@ -645,19 +664,13 @@ export default function Storefront() {
                 );
               })}
             </div>
-            <label className="sort-picker">
-              <span className="sr-only">Sort products</span>
-              <select
-                value={sort}
-                onChange={(e) => setSort(e.target.value)}
-                aria-label="Sort products"
-              >
-                <option value="featured">Featured</option>
-                <option value="low">Price: low to high</option>
-                <option value="high">Price: high to low</option>
-              </select>
-              <ChevronDown size={13} />
-            </label>
+            <Select label="Sort products" value={sort} onChange={setSort} options={[
+              { value: "featured", label: "Featured", description: "Our curated selection" },
+              { value: "low", label: "Price: low to high" },
+              { value: "high", label: "Price: high to low" },
+              { value: "new", label: "New arrivals" },
+              { value: "saving", label: "Biggest savings" },
+            ]} />
           </div>
           {catalogSearch && (
             <div className="search-caption">
@@ -671,7 +684,7 @@ export default function Storefront() {
             </div>
           )}
           <div className="product-grid">
-            {saleOnly && <button className="sale-filter-reset" onClick={() => setSaleOnly(false)}>Showing 50% offers · Show all products <X size={14} /></button>}
+            {saleOnly && <button className="sale-filter-reset" onClick={() => setSaleOnly(false)}>Showing all offers · Show all products <X size={14} /></button>}
             {filteredProducts.map(productCard)}
           </div>
           {!filteredProducts.length && (
@@ -705,41 +718,41 @@ export default function Storefront() {
               <span>Power to create.</span>
             </h2>
             <p>
-              Meet MacBook Pro with M2. For ideas that deserve
+              Meet MacBook Air with M5. For ideas that deserve
               <br className="desktop-break" /> a little more power, wherever
               your day takes you.
             </p>
             <button
               className="button button-lime"
-              onClick={() => openProduct(products.find((p) => p.id === "macbook-pro-m2")!)}
+              onClick={() => openProduct(products.find((p) => p.id === "macbook-air-13-m5")!)}
             >
-              Meet your new MacBook <ArrowUpRight size={18} />
+              Explore MacBook Air <ArrowUpRight size={18} />
             </button>
             <div className="feature-specs">
               <span>
-                <strong>M2</strong>Apple silicon
+                <strong>M5</strong>Apple silicon
               </span>
               <span>
-                <strong>13.3″</strong>Retina display
+                <strong>13.6″</strong>Liquid Retina
               </span>
               <span>
-                <strong>1.4 kg</strong>Ready to go anywhere
+                <strong>30%</strong>Off every MacBook
               </span>
             </div>
           </div>
           <div className="feature-art">
             <div className="feature-glow" />
-            <span className="feature-watermark">air.</span>
+            <span className="feature-watermark">M5.</span>
             <Image
-              src="/images/macbook-header.png"
-              alt="MacBook Pro laptop"
+              src={airPhotos["Sky Blue"]}
+              alt="MacBook Air in Sky Blue"
               width={850}
               height={650}
               className="feature-laptop"
             />
             <div className="feature-caption">
-              <span>MacBook Pro M2</span>
-              <span>From {price(products.find((p) => p.id === "macbook-pro-m2")!.price, currency)}</span>
+              <span>MacBook Air M5 · Save 30%</span>
+              <span>From {price(products.find((p) => p.id === "macbook-air-13-m5")!.price, currency)}</span>
             </div>
           </div>
         </section>
@@ -1210,6 +1223,7 @@ export default function Storefront() {
               alt={`${selectedProduct.name} in ${activeProduct.colors[0].name}`}
               width={650}
               height={650}
+              sizes="(max-width: 600px) 85vw, 440px"
             />
             <span className="product-detail-tag">
               <Sparkles size={13} /> {selectedProduct.illustration ? "Illustrative product preview" : "An everyday upgrade"}
@@ -1224,10 +1238,11 @@ export default function Storefront() {
             <p className="detail-price" aria-live="polite">
               {price(activeProduct.price, currency)}
             </p>
-            {selectedProduct.originalPrice && <p className="detail-sale"><del>{price(selectedProduct.originalPrice, currency)}</del><span>50% OFF · Save {price(selectedProduct.originalPrice - selectedProduct.price, currency)}</span></p>}
-            {selectedProduct.storage && <fieldset className="variant-fieldset"><legend>Storage</legend><div className="storage-options">{selectedProduct.storage.map((storage, index) => <button type="button" key={storage.name} disabled={!storage.available} aria-pressed={selectedStorage === index} onClick={() => setSelectedStorage(index)} className={selectedStorage === index ? "selected" : ""}><strong>{storage.name}</strong><small>{storage.available && storage.price !== null ? price(storage.price, currency) : "Unavailable"}</small></button>)}</div></fieldset>}
+            {selectedProduct.originalPrice && <p className="detail-sale"><del>{price(activeProduct.originalPrice ?? selectedProduct.originalPrice, currency)}</del><span>{Math.round((1 - activeProduct.price / (activeProduct.originalPrice ?? selectedProduct.originalPrice)) * 100)}% OFF · Save {price((activeProduct.originalPrice ?? selectedProduct.originalPrice) - activeProduct.price, currency)}</span></p>}
+            {selectedProduct.storage && <fieldset className="variant-fieldset"><legend>{selectedProduct.optionLabel ?? "Storage"}</legend><div className="storage-options">{selectedProduct.storage.map((storage, index) => <button type="button" key={storage.name} disabled={!storage.available} aria-pressed={selectedStorage === index} onClick={() => setSelectedStorage(index)} className={selectedStorage === index ? "selected" : ""}><strong>{storage.name}</strong><small>{storage.available && storage.price !== null ? price(storage.price, currency) : "Unavailable"}</small></button>)}</div></fieldset>}
             <fieldset className="variant-fieldset"><legend>Color: <strong aria-live="polite">{activeProduct.colors[0].name}</strong></legend><div className="detail-colors">{selectedProduct.colors.map((color, index) => <button key={color.name} type="button" title={color.name} aria-label={`Select ${color.name}`} aria-pressed={selectedColor === index} onClick={() => setSelectedColor(index)} className={`detail-color ${selectedColor === index ? "selected" : ""}`}><span style={{ backgroundColor: color.value }} />{color.name}</button>)}</div></fieldset>
             {selectedProduct.illustration && <p className="illustration-note">Illustrative preview. {selectedProduct.storage ? "Colors follow Apple’s official Pro lineup. Screen colors may vary from the physical finish." : "Included attachments and regional packaging may vary."}</p>}
+            {selectedProduct.photoNote && <p className="illustration-note">{selectedProduct.photoNote}</p>}
             <ul className="spec-list">
               {selectedProduct.specs.map((spec) => (
                 <li key={spec}>
@@ -1425,6 +1440,9 @@ export default function Storefront() {
         >
           <p className="eyebrow">DUBAI ELECTRONICS</p>
           <h2 id="modal-title">A world of possibility.</h2>
+          <div className="mobile-currency"><Select label="Display currency" value={currency} onChange={(value) => setCurrency(value as Currency)} options={[
+            { value: "AZN", label: "AZN ₼" }, { value: "USD", label: "USD $", description: "Indicative US dollar conversion" }, { value: "AED", label: "AED" },
+          ]} /></div>
           <nav aria-label="Mobile navigation">
             <button onClick={() => browse()}>
               Shop all <ArrowUpRight size={21} />

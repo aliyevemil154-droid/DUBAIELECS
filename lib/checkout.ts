@@ -171,9 +171,9 @@ export function priceCheckout(
     return { product, quantity: item.quantity };
   });
   const subtotal = items.reduce(
-    (sum, item) => sum + item.product.price * item.quantity,
+    (sum, item) => sum + Math.round(item.product.price * 100) * item.quantity,
     0,
-  );
+  ) / 100;
   const policy = shippingPolicy(env);
   const shipping =
     subtotal >= policy.freeShippingThreshold ? 0 : policy.shippingFee;

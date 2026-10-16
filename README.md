@@ -1,6 +1,6 @@
 # Dubai Electronics
 
-A responsive electronics storefront for Dubai-to-Baku shopping, built with Next.js, TypeScript and React. Includes iPhone 18 Pro and Pro Max with selectable official colors and storage, Dyson Supersonic Nural, and a six-product 50% sale collection. Variant choices persist through the bag and are priced on the server. New product artwork is illustrative.
+A responsive electronics storefront for Dubai-to-Baku shopping, built with Next.js, TypeScript and React. Includes iPhone 18 Pro and Pro Max with selectable official colors and storage, Dyson Supersonic Nural, and a 20-product collection covering phones, laptops, audio, gaming, cameras, wearables and home cinema. Variant choices persist through the bag and are priced on the server. Older iPhones are removed. Samsung S25/S26 Ultras offer every official finish and 256 GB, 512 GB and 1 TB options. All MacBooks and new Samsung Ultras have 30% discounts, calculated per configuration.
 
 **Deploy to Netlify + Render:** follow [DEPLOYMENT.md](DEPLOYMENT.md). The included `netlify.toml` and `render.yaml` support a Netlify frontend and a dedicated Render API (`npm install` / `npm start`).
 
@@ -25,7 +25,7 @@ npm run build
 npm run start
 ```
 
-`npm run test:e2e` runs browser tests when Playwright browsers are installed. Local images and bundled fonts keep the storefront independent of third-party image or font services. Product-photo sources and license attribution are recorded in `public/images/SOURCES.md`; the iPhone illustration is generated artwork and should be reviewed against the exact product variant before launch.
+`npm run test:e2e` runs browser tests when Playwright browsers are installed. Fonts are bundled locally. New Apple, Samsung, Dyson and PlayStation product images use original manufacturer CDN URLs, optimized and cached by Next.js. The additional locally bundled photos retain their source license. See `public/images/SOURCES.md` for sources and `CATALOG.md` for reference pricing. Run browser image checks from an environment whose network permits the manufacturer hosts.
 
 ## Optional Stripe adapter
 

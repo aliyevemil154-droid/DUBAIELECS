@@ -33,6 +33,17 @@ const nextConfig: NextConfig = {
   devIndicators: false,
   allowedDevOrigins: ["127.0.0.1", ...previewHostnames],
   poweredByHeader: false,
+  images: {
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 86400,
+    remotePatterns: [
+      { protocol: "https", hostname: "www.apple.com", pathname: "/v/**" },
+      { protocol: "https", hostname: "store.storeimages.cdn-apple.com", pathname: "/1/**" },
+      { protocol: "https", hostname: "images.samsung.com", pathname: "/is/image/samsung/**" },
+      { protocol: "https", hostname: "dyson-h.assetsadobe2.com", pathname: "/is/image/**" },
+      { protocol: "https", hostname: "gmedia.playstation.com", pathname: "/is/image/SIEPDC/**" },
+    ],
+  },
   async rewrites() {
     return {
       beforeFiles: backendUrl ? [{ source: "/api/:path*", destination: `${backendUrl}/api/:path*` }] : [],

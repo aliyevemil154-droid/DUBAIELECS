@@ -14,8 +14,6 @@ Downloaded through TLS-verified HTTPS on 2026-10-07. Images are served locally; 
 
 These transparent PNG product images are from [GreatStackDev/QuickCart](https://github.com/GreatStackDev/QuickCart), distributed under the MIT license below. The displayed manufacturer marks belong to their respective owners. Product photography should match the merchant’s actual inventory before launch.
 
-`hero-generated.png` is an AI-generated promotional smartphone render created specifically for this storefront. It is a marketing illustration rather than a manufacturer product photograph.
-
 ## Integrity records
 
 ```text
@@ -39,4 +37,25 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-`phone-*.svg` and `dyson-dryer.svg` are original schematic product illustrations, not manufacturer photography. Pro colors (Burgundy, Glacier, Silver, Black) are verified against [Apple’s September 9, 2026 announcement](https://www.apple.com/newsroom/2026/09/apple-debuts-iphone-18-pro-and-iphone-18-pro-max/). Dyson Supersonic Nural features are referenced from [Dyson](https://www.dyson.com/hair-care/hair-dryers/supersonic-nural). Replace illustrations with inventory photography when available. Prices and the Dyson stock count were supplied by the merchant.
+
+## Original manufacturer photos
+
+Verified source pages on 2026-10-16; exact image URLs are centralized in `lib/product-photos.ts`. These are original manufacturer photos, not AI renders or recolored images. The generated iPhone and Dyson illustrations were removed. Manufacturer marks and photos remain their respective owners’ property.
+
+| Product | Primary source |
+| --- | --- |
+| iPhone 18 Pro / Pro Max | https://www.apple.com/iphone-18-pro/ and https://www.apple.com/shop/buy-iphone/iphone-18-pro |
+| MacBook Air M5 | https://www.apple.com/macbook-air/ |
+| MacBook Pro M5 / M5 Pro | https://www.apple.com/macbook-pro/ |
+| Samsung S25 Ultra | https://www.samsung.com/uk/smartphones/galaxy-s25-ultra/specs/ |
+| Samsung S26 Ultra | https://www.samsung.com/uk/smartphones/galaxy-s26-ultra/specs/ |
+| Dyson Supersonic Nural | https://www.dyson.com/hair-care/hair-dryers/supersonic-nural/ceramic-pink-rose-gold |
+| PlayStation 5 Slim | https://www.playstation.com/en-us/ps5/ |
+
+The Pro Max Burgundy comparison photo shows both sizes. Other finishes use Apple’s official Pro-series finish images. MacBook photos show the model family/finish rather than implying any internal configuration. The PlayStation photo is a console marketing photo; accessories pictured do not change the listed contents.
+
+Original CDN URLs are optimized/cached by Next.js in production. The cloud allowlist currently blocks downloading the manufacturer binaries, so they are not copied into this repository. A failed network request displays an honest photo-unavailable state without blocking shopping controls. Full image-loading QA must run where these manufacturer hosts are reachable.
+
+## Additional bundled photographs
+
+`catalog/canon-r5.png`, `sony-earbuds.png`, `asus-g16.png`, `garmin-watch.png`, `samsung-freestyle.png`, and `xbox-controller.png` were copied from the MIT-licensed GreatStackDev/QuickCart assets, retaining the license above. They correspond to `cannon_camera_image.png`, `sony_airbuds_image.png`, `asus_laptop_image.png`, `venu_watch_image.png`, `projector_image.png`, and `md_controller_image.png`. Models were visually reviewed; no 4K claim is made for The Freestyle, and the pictured Sony earbuds are described as WF-1000XM4 rather than the source sample’s incorrect XM5 label. Unconfirmed Garmin/ASUS regional configurations are noted on their product pages.

@@ -3,8 +3,25 @@ import { mkdir } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 
+// Exercise real fallback behavior when the workspace cannot reach manufacturer CDNs.
+// No substitute product image is supplied; full photo-loading tests remain enabled by default.
+const browserExceptions = new WeakMap<Page, string[]>();
+test.beforeEach(async ({ page }) => {
+  const exceptions: string[] = [];
+  browserExceptions.set(page, exceptions);
+  page.on("pageerror", (error) => exceptions.push(error.message));
+  if (process.env.PHOTO_NETWORK_BLOCKED === "1") {
+    await page.route(/\/_next\/image\?url=https(?:%3A|:)/i, (route) => route.abort("blockedbyclient"));
+  }
+});
+
+test.afterEach(async ({ page }) => {
+  expect(browserExceptions.get(page) ?? [], "No unhandled browser exceptions").toEqual([]);
+});
+
 async function openStore(page: Page) {
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "domcontentloaded" });
+  await expect(page.locator("#main")).toHaveAttribute("data-store-ready", "true");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "Exceptional tech",
   );
@@ -24,6 +41,7 @@ async function expectNoHorizontalOverflow(page: Page) {
 test("the storefront has working images, no browser errors, and fits the viewport", async ({
   page,
 }, testInfo) => {
+  test.skip(process.env.PHOTO_NETWORK_BLOCKED === "1", "The cloud allowlist blocks official photo CDNs; image loading must be checked in an environment with manufacturer-host access.");
   const browserErrors: string[] = [];
   page.on("pageerror", (error) => browserErrors.push(error.message));
   page.on("console", (message) => {
@@ -67,19 +85,15 @@ test("category filters and price sorting reveal relevant products", async ({
   const category = page.getByRole("group", { name: "Product category" });
   await category.getByRole("button", { name: "Audio", exact: true }).click();
   const cards = page.locator("#shop .product-card");
-  await expect(cards).toHaveCount(2);
-  await expect(cards.locator(".product-category")).toHaveText([
-    "Audio",
-    "Audio",
-  ]);
-  await page
-    .getByRole("combobox", { name: "Sort products" })
-    .selectOption("low");
+  await expect(cards).toHaveCount(3);
+  await expect(cards.locator(".product-category")).toHaveText(["Audio", "Audio", "Audio"]);
+  await page.getByRole("combobox", { name: "Sort products" }).click();
+  await page.getByRole("option", { name: "Price: low to high", exact: true }).click();
   await expect(cards.first()).toContainText("AirPods Pro 2");
-  await expect(cards.last()).toContainText("Bose QuietComfort 45");
+  await expect(cards.last()).toContainText("Sony WF-1000XM4");
   await category.getByRole("button", { name: "Gaming", exact: true }).click();
-  await expect(cards).toHaveCount(1);
-  await expect(cards.first()).toContainText("PlayStation 5");
+  await expect(cards).toHaveCount(2);
+  await expect(cards.filter({ hasText: "PlayStation 5" })).toHaveCount(1);
   await expectNoHorizontalOverflow(page);
 });
 
@@ -93,12 +107,12 @@ test("search finds devices and provides a recoverable empty result", async ({
   const dialog = page.getByRole("dialog");
   const input = dialog.getByRole("textbox", { name: "Search the collection" });
   await expect(input).toBeFocused();
-  await input.fill("iPhone 16");
+  await input.fill("iPhone 18 Pro Max");
   await expect(dialog.locator(".search-result")).toHaveCount(1);
   await dialog.getByRole("button", { name: "See search results" }).click();
   await expect(page.locator("#shop .product-card")).toHaveCount(1);
   await expect(page.locator("#shop .product-card")).toContainText(
-    "iPhone 16 Pro",
+    "iPhone 18 Pro Max",
   );
   await page
     .getByRole("button", { name: "Search products", exact: true })
@@ -114,7 +128,7 @@ test("search finds devices and provides a recoverable empty result", async ({
   await page
     .getByRole("button", { name: "Explore all devices", exact: true })
     .click();
-  await expect(page.locator("#shop .product-card")).toHaveCount(9);
+  await expect(page.locator("#shop .product-card")).toHaveCount(20);
 });
 
 test("product details add to a persistent bag with accurate quantities and subtotal", async ({
@@ -122,23 +136,23 @@ test("product details add to a persistent bag with accurate quantities and subto
 }) => {
   await openStore(page);
   await page
-    .getByRole("button", { name: "View iPhone 16 Pro", exact: true })
+    .getByRole("button", { name: "View iPhone 18 Pro", exact: true })
     .click();
   const dialog = page.getByRole("dialog");
   await expect(
-    dialog.getByRole("heading", { name: "iPhone 16 Pro", exact: true }),
+    dialog.getByRole("heading", { name: "iPhone 18 Pro", exact: true }),
   ).toBeVisible();
-  await expect(dialog).toContainText("A18 Pro chip");
+  await expect(dialog).toContainText("6.3-inch Super Retina XDR display");
   await dialog
     .getByRole("button", { name: "Add to your bag", exact: true })
     .click();
   await dialog.getByRole("button", { name: "Close dialog" }).click();
   await page.getByRole("button", { name: "Shopping bag, 1 item" }).click();
   await dialog
-    .getByRole("button", { name: "Increase iPhone 16 Pro quantity" })
+    .getByRole("button", { name: "Increase iPhone 18 Pro quantity" })
     .click();
   await expect(dialog.locator(".quantity-control")).toContainText("2");
-  await expect(dialog.locator(".cart-summary")).toContainText("2,399");
+  await expect(dialog.locator(".cart-summary")).toContainText("3,748");
   await dialog.getByRole("button", { name: "Close dialog" }).click();
   await page.reload();
   await expect(
@@ -146,11 +160,11 @@ test("product details add to a persistent bag with accurate quantities and subto
   ).toBeVisible();
   await page.getByRole("button", { name: "Shopping bag, 2 items" }).click();
   await dialog
-    .getByRole("button", { name: "Decrease iPhone 16 Pro quantity" })
+    .getByRole("button", { name: "Decrease iPhone 18 Pro quantity" })
     .click();
-  await expect(dialog.locator(".cart-summary")).toContainText("1,199.5");
+  await expect(dialog.locator(".cart-summary")).toContainText("1,874");
   await dialog
-    .getByRole("button", { name: "Remove iPhone 16 Pro from bag" })
+    .getByRole("button", { name: "Remove iPhone 18 Pro from bag" })
     .click();
   await expect(dialog).toContainText("Your bag is empty");
   await expect(
@@ -164,20 +178,20 @@ test("saved favourites persist across reloads and can be removed", async ({
   await openStore(page);
   await page
     .getByRole("button", {
-      name: "Save iPhone 16 Pro to wishlist",
+      name: "Save iPhone 18 Pro to wishlist",
       exact: true,
     })
     .click();
   await expect(
     page.getByRole("button", {
-      name: "Remove iPhone 16 Pro from wishlist",
+      name: "Remove iPhone 18 Pro from wishlist",
       exact: true,
     }),
   ).toHaveAttribute("aria-pressed", "true");
   await page.reload();
   await expect(
     page.getByRole("button", {
-      name: "Remove iPhone 16 Pro from wishlist",
+      name: "Remove iPhone 18 Pro from wishlist",
       exact: true,
     }),
   ).toHaveAttribute("aria-pressed", "true");
@@ -192,17 +206,17 @@ test("saved favourites persist across reloads and can be removed", async ({
   }
   const dialog = page.getByRole("dialog");
   await expect(
-    dialog.getByRole("heading", { name: "iPhone 16 Pro", exact: true }),
+    dialog.getByRole("heading", { name: "iPhone 18 Pro", exact: true }),
   ).toBeVisible();
   await dialog
-    .getByRole("button", { name: "Remove iPhone 16 Pro from wishlist" })
+    .getByRole("button", { name: "Remove iPhone 18 Pro from wishlist" })
     .click();
   await expect(dialog).toContainText("Tap the heart on a device");
   await dialog.getByRole("button", { name: "Close dialog" }).click();
   await page.reload();
   await expect(
     page.getByRole("button", {
-      name: "Save iPhone 16 Pro to wishlist",
+      name: "Save iPhone 18 Pro to wishlist",
       exact: true,
     }),
   ).toHaveAttribute("aria-pressed", "false");
@@ -345,16 +359,16 @@ test("navigation reaches categories using the menu on mobile", async ({
       .getByRole("button", { name: "Gaming", exact: true })
       .click();
     await expect(page.getByRole("dialog")).toHaveCount(0);
-    await expect(page.locator("#shop .product-card")).toHaveCount(1);
-    await expect(page.locator("#shop .product-card")).toContainText(
+    await expect(page.locator("#shop .product-card")).toHaveCount(2);
+    await expect(page.locator("#shop .product-card").first()).toContainText(
       "PlayStation 5",
     );
   } else {
     await page
       .getByRole("navigation", { name: "Main navigation" })
-      .getByRole("button", { name: "Shop all", exact: true })
-      .click();
-    await expect(page.locator("#shop .product-card")).toHaveCount(9);
+      .locator(".shop-menu summary").click();
+    await page.locator(".shop-menu-panel").getByRole("button", { name: "All devices", exact: true }).click();
+    await expect(page.locator("#shop .product-card")).toHaveCount(20);
   }
   await expectNoHorizontalOverflow(page);
 });
@@ -439,7 +453,7 @@ test("compact phones and tablets have no horizontal page overflow", async ({
   await page
     .getByRole("button", { name: "Explore all products", exact: true })
     .click();
-  await expect(page.locator("#shop .product-card")).toHaveCount(9);
+  await expect(page.locator("#shop .product-card")).toHaveCount(20);
   for (const width of [320, 360, 430, 768]) {
     await page.setViewportSize({ width, height: 900 });
     await expect
@@ -460,7 +474,7 @@ test("reopening an old paid confirmation preserves the current shopping bag", as
 }) => {
   await openStore(page);
   const currentBag = [
-    { id: "iphone-16-pro", quantity: 2 },
+    { id: "iphone-18-pro--0--0", quantity: 2 },
     { id: "airpods-pro-2", quantity: 1 },
   ];
   await page.evaluate(
@@ -496,7 +510,7 @@ test("a matching paid receipt subtracts purchased quantities and preserves later
     localStorage.setItem(
       "dubai-electronics-cart",
       JSON.stringify([
-        { id: "iphone-16-pro", quantity: 3 },
+        { id: "iphone-18-pro--0--0", quantity: 3 },
         { id: "airpods-pro-2", quantity: 2 },
       ]),
     );
@@ -504,7 +518,7 @@ test("a matching paid receipt subtracts purchased quantities and preserves later
       "dubai-electronics-pending-checkout",
       JSON.stringify({
         sessionId: id,
-        items: [{ id: "iphone-16-pro", quantity: 2 }],
+        items: [{ id: "iphone-18-pro--0--0", quantity: 2 }],
       }),
     );
   }, sessionId);
@@ -516,7 +530,7 @@ test("a matching paid receipt subtracts purchased quantities and preserves later
     page.getByText("Payment confirmed", { exact: true }),
   ).toBeVisible();
   const expectedBag = [
-    { id: "iphone-16-pro", quantity: 1 },
+    { id: "iphone-18-pro--0--0", quantity: 1 },
     { id: "airpods-pro-2", quantity: 2 },
   ];
   expect(
@@ -544,14 +558,14 @@ test("Pro color and storage choices update artwork and survive bag and checkout 
   await openStore(page);
   const card = page.locator(".product-card").filter({ has: page.getByRole("button", { name: "iPhone 18 Pro", exact: true }) }).first();
   await card.getByRole("button", { name: "iPhone 18 Pro: Glacier", exact: true }).click();
-  await expect(card.locator(".product-image")).toHaveAttribute("src", /phone-glacier/);
+  await expect(card.locator(".product-image")).toHaveAttribute("src", /color_glacier/);
   await card.getByRole("button", { name: "View iPhone 18 Pro", exact: true }).click();
   const dialog = page.getByRole("dialog");
   await expect(dialog.getByRole("button", { name: "Select Glacier" })).toHaveAttribute("aria-pressed", "true");
   await dialog.getByRole("button", { name: /512 GB/ }).click();
   await expect(dialog.locator(".detail-price")).toContainText("1,950 AZN");
   await dialog.getByRole("button", { name: "Select Burgundy" }).click();
-  await expect(dialog.locator(".product-detail-image img")).toHaveAttribute("src", /phone-burgundy/);
+  await expect(dialog.locator(".product-detail-image img")).toHaveAttribute("src", /color_burgundy/);
   await dialog.getByRole("button", { name: "Add to your bag", exact: true }).click();
   await dialog.getByRole("button", { name: "Close dialog" }).click();
   await page.reload();
@@ -578,11 +592,66 @@ test("unavailable Pro Max storage is disabled and Dyson carries the requested st
   await expect(dialog.locator(".detail-price")).toContainText("489 AZN");
 });
 
-test("sale collection shows six half-price items and returns to the full catalog", async ({ page }) => {
+test("sale collection shows all discounted items and returns to the full catalog", async ({ page }) => {
   await openStore(page);
-  await page.getByRole("button", { name: "Shop 50% offers" }).click();
-  await expect(page.locator("#shop .product-card")).toHaveCount(6);
-  await expect(page.locator("#shop .product-card .original-price")).toHaveCount(6);
-  await page.getByRole("button", { name: /Showing 50% offers/ }).click();
-  await expect(page.locator("#shop .product-card")).toHaveCount(9);
+  await page.getByRole("button", { name: "Explore all offers" }).click();
+  await expect(page.locator("#shop .product-card")).toHaveCount(17);
+  await expect(page.locator("#shop .product-card .original-price")).toHaveCount(17);
+  await page.getByRole("button", { name: /Showing all offers/ }).click();
+  await expect(page.locator("#shop .product-card")).toHaveCount(20);
+});
+
+test("Samsung storage and all official color options keep the 30% sale correct", async ({ page }) => {
+  await openStore(page);
+  await page.getByRole("button", { name: "View Samsung Galaxy S26 Ultra", exact: true }).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog.locator(".detail-color")).toHaveCount(6);
+  await expect(dialog.locator(".storage-options button")).toHaveCount(3);
+  const initialPrice = await dialog.locator(".detail-price").innerText();
+  await dialog.getByRole("button", { name: /1 TB/ }).click();
+  await expect(dialog.locator(".detail-price")).not.toHaveText(initialPrice);
+  await expect(dialog.locator(".detail-sale")).toContainText("30% OFF");
+  await dialog.getByRole("button", { name: "Select Pink Gold", exact: true }).click();
+  await expect(dialog.locator(".product-detail-image img")).toHaveAttribute("src", /Pink-Gold/);
+  await dialog.getByRole("button", { name: "Add to your bag", exact: true }).click();
+  await dialog.getByRole("button", { name: "Close dialog" }).click();
+  await page.getByRole("button", { name: "Shopping bag, 1 item", exact: true }).click();
+  await expect(dialog.locator(".cart-item")).toContainText("1 TB · Pink Gold");
+  await expectNoHorizontalOverflow(page);
+});
+
+test("custom dropdowns support keyboard selection and close with Escape and outside click", async ({ page }, testInfo) => {
+  await openStore(page);
+  const sort = page.getByRole("combobox", { name: "Sort products" });
+  await sort.scrollIntoViewIfNeeded();
+  await sort.focus();
+  await page.keyboard.press("ArrowDown");
+  await expect(sort).toHaveAttribute("aria-expanded", "true");
+  await page.keyboard.press("End");
+  await page.keyboard.press("Enter");
+  await expect(sort).toHaveText("Biggest savings");
+  await expect(sort).toHaveAttribute("aria-expanded", "false");
+  await sort.click();
+  await page.keyboard.press("Escape");
+  await expect(sort).toHaveAttribute("aria-expanded", "false");
+  await sort.click();
+  await page.locator("#shop h2").click();
+  await expect(sort).toHaveAttribute("aria-expanded", "false");
+  if (testInfo.project.name === "mobile") await page.getByRole("button", { name: "Open menu", exact: true }).click();
+  const currency = page.getByRole("combobox", { name: "Display currency" });
+  await currency.click();
+  await page.getByRole("option", { name: /US dollar/ }).click();
+  await expect(currency).toContainText("USD");
+  await expectNoHorizontalOverflow(page);
+});
+
+test("removed iPhones are absent from search and stale saved bags recover", async ({ page }) => {
+  await openStore(page);
+  await page.evaluate(() => localStorage.setItem("dubai-electronics-cart", JSON.stringify([{ id: "iphone-16-pro", quantity: 1 }])));
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await expect(page.getByRole("button", { name: "Shopping bag, 0 items", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Search products", exact: true }).click();
+  await page.getByRole("textbox", { name: "Search the collection" }).fill("iPhone 16");
+  await expect(page.locator(".search-result")).toHaveCount(0);
+  await expect(page.getByRole("dialog")).toContainText("No matches");
 });

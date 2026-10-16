@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import ProductImage from "./product-image";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
   Check,
-  ChevronDown,
   CreditCard,
   Globe2,
   LoaderCircle,
@@ -131,9 +131,9 @@ export default function Checkout() {
   }, []);
 
   const subtotal = cart.reduce(
-    (sum, item) => sum + (getProduct(item.id)?.price ?? 0) * item.quantity,
+    (sum, item) => sum + Math.round((getProduct(item.id)?.price ?? 0) * 100) * item.quantity,
     0,
-  );
+  ) / 100;
   const shipping = subtotal >= freeShippingThreshold ? 0 : shippingFee;
   const total = subtotal + (cart.length ? shipping : 0);
   const quantity = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -395,7 +395,7 @@ export default function Checkout() {
                     Country
                     <div className="checkout-fixed-field">
                       <span>🇦🇿 &nbsp; Azerbaijan</span>
-                      <ChevronDown size={15} />
+                      <LockKeyhole size={15} />
                     </div>
                   </div>
                 </div>
@@ -478,7 +478,7 @@ export default function Checkout() {
                     return (
                       <div className="checkout-item" key={item.id}>
                         <div className="checkout-item-image">
-                          <img src={product.image} alt={product.name} />
+                          <ProductImage src={product.image} alt={`${product.name} · ${product.subtitle}`} width={100} height={100} sizes="100px" />
                         </div>
                         <div className="checkout-item-details">
                           <div className="checkout-item-top">

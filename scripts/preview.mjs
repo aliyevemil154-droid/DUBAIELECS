@@ -39,7 +39,7 @@ async function isStorefrontReady() {
     if (!response.ok) return false;
     const html = await response.text();
     return (
-      html.includes("Dubai Electronics") && html.includes("Your next upgrade")
+      html.includes("Dubai Electronics") && html.includes("Exceptional tech")
     );
   } catch {
     return false;
