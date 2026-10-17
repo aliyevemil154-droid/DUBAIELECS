@@ -1,6 +1,9 @@
 "use client";
 
+import { useLanguage } from "@/components/language-provider";
+
 import Link from "next/link";
+import LanguageSwitcher from "./language-switcher";
 import ProductImage from "./product-image";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -49,13 +52,10 @@ function readCart(): CartItem[] {
 }
 
 export function CheckoutHeader() {
+  const { t } = useLanguage();
   return (
     <header className="checkout-header">
-      <Link
-        className="brand"
-        href="/"
-        aria-label="Dubai Electronics home"
-      >
+      <Link className="brand" href="/" aria-label={t("Dubai Electronics home")}>
         <span className="brand-mark">
           <Zap size={24} fill="currentColor" strokeWidth={1.2} />
         </span>
@@ -64,17 +64,25 @@ export function CheckoutHeader() {
         </span>
       </Link>
       <div className="checkout-header-secure">
-        <LockKeyhole size={14} /> Secure checkout
+        <LockKeyhole size={14} /> {t("Secure checkout")}
       </div>
-      <Link href="/" className="checkout-back">
-        <ArrowLeft size={16} />
-        <span>Back to shopping</span>
-      </Link>
+      <div className="checkout-header-actions">
+        <LanguageSwitcher />
+        <Link
+          href="/"
+          className="checkout-back"
+          aria-label={t("Back to shopping")}
+        >
+          <ArrowLeft size={16} />
+          <span>{t("Back to shopping")}</span>
+        </Link>
+      </div>
     </header>
   );
 }
 
 export default function Checkout() {
+  const { t } = useLanguage();
   const searchParams = useSearchParams();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [ready, setReady] = useState(false);
@@ -102,7 +110,10 @@ export default function Checkout() {
     setCart(readCart());
     setReady(true);
     let active = true;
-    fetch("/api/checkout", { cache: "no-store", signal: AbortSignal.timeout(45000) })
+    fetch("/api/checkout", {
+      cache: "no-store",
+      signal: AbortSignal.timeout(45000),
+    })
       .then(async (response) => {
         if (!response.ok)
           throw new Error("Payment availability could not be checked.");
@@ -130,10 +141,13 @@ export default function Checkout() {
     };
   }, []);
 
-  const subtotal = cart.reduce(
-    (sum, item) => sum + Math.round((getProduct(item.id)?.price ?? 0) * 100) * item.quantity,
-    0,
-  ) / 100;
+  const subtotal =
+    cart.reduce(
+      (sum, item) =>
+        sum +
+        Math.round((getProduct(item.id)?.price ?? 0) * 100) * item.quantity,
+      0,
+    ) / 100;
   const shipping = subtotal >= freeShippingThreshold ? 0 : shippingFee;
   const total = subtotal + (cart.length ? shipping : 0);
   const quantity = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -144,7 +158,14 @@ export default function Checkout() {
         ? cart.filter((item) => item.id !== id)
         : cart.map((item) =>
             item.id === id
-              ? { ...item, quantity: Math.min(5, getProduct(id)?.stock ?? 5, Math.max(1, nextQuantity)) }
+              ? {
+                  ...item,
+                  quantity: Math.min(
+                    5,
+                    getProduct(id)?.stock ?? 5,
+                    Math.max(1, nextQuantity),
+                  ),
+                }
               : item,
           );
     setCart(next);
@@ -237,26 +258,28 @@ export default function Checkout() {
       <CheckoutHeader />
       <main className="checkout-main">
         <div className="checkout-title-block">
-          <span className="checkout-eyebrow">THE GOOD PART IS NEXT</span>
+          <span className="checkout-eyebrow">{t("THE GOOD PART IS NEXT")}</span>
           <h1>
-            A little closer to <em>yours.</em>
+            {t("A little closer to")} <em>{t("yours.")}</em>
           </h1>
-          <p>Premium tech. A smooth journey from Dubai to your door.</p>
+          <p>{t("Premium tech. A smooth journey from Dubai to your door.")}</p>
         </div>
         {!ready ? (
           <div className="checkout-loading">
-            <LoaderCircle size={22} className="checkout-spin" /> Loading your
-            bag…
+            <LoaderCircle size={22} className="checkout-spin" />{" "}
+            {t("Loading your bag…")}
           </div>
         ) : !cart.length ? (
           <section className="checkout-empty">
             <div className="checkout-empty-icon">
               <ShoppingBag size={34} strokeWidth={1.5} />
             </div>
-            <h2>Your next upgrade is waiting.</h2>
-            <p>Your bag is empty. Discover a little something you’ll love.</p>
+            <h2>{t("Your next upgrade is waiting.")}</h2>
+            <p>
+              {t("Your bag is empty. Discover a little something you’ll love.")}
+            </p>
             <Link className="checkout-primary" href="/">
-              Explore the collection <ArrowRight size={18} />
+              {t("Explore the collection")} <ArrowRight size={18} />
             </Link>
           </section>
         ) : (
@@ -264,35 +287,37 @@ export default function Checkout() {
             <div className="checkout-details">
               {!configLoading && !configured && (
                 <div className="checkout-notice checkout-preview-notice">
-                  <strong>Store preview.</strong> Product prices, business
-                  details, and delivery and return policies are awaiting
-                  merchant confirmation. Online ordering is not available yet.{" "}
+                  <strong>{t("Store preview.")}</strong>{" "}
+                  {t(
+                    "Product prices, business details, and delivery and return policies are awaiting merchant confirmation. Online ordering is not available yet.",
+                  )}{" "}
                   <Link href="/policies/terms">
-                    Read our draft terms <ArrowRight size={12} />
+                    {t("Read our draft terms")} <ArrowRight size={12} />
                   </Link>
                 </div>
               )}
               {searchParams.get("cancelled") === "1" && (
                 <div role="status" className="checkout-notice">
-                  Your payment wasn’t completed. Your bag is saved, so you can
-                  continue whenever you’re ready.
+                  {t(
+                    "Your payment wasn’t completed. Your bag is saved, so you can continue whenever you’re ready.",
+                  )}
                 </div>
               )}
               <section className="checkout-card checkout-information">
                 <div className="checkout-section-title">
                   <span className="checkout-step">01</span>
                   <div>
-                    <h2>Your details</h2>
-                    <p>Where we can reach you about your order.</p>
+                    <h2>{t("Your details")}</h2>
+                    <p>{t("Where we can reach you about your order.")}</p>
                   </div>
                 </div>
                 <div className="checkout-field-grid">
                   <label className="checkout-field checkout-full">
-                    Full name
+                    {t("Full name")}
                     <input
                       name="name"
                       autoComplete="name"
-                      placeholder="Your first and last name"
+                      placeholder={t("Your first and last name")}
                       required
                       minLength={2}
                       maxLength={100}
@@ -301,7 +326,7 @@ export default function Checkout() {
                     />
                   </label>
                   <label className="checkout-field">
-                    Email address
+                    {t("Email address")}
                     <input
                       name="email"
                       type="email"
@@ -314,7 +339,7 @@ export default function Checkout() {
                     />
                   </label>
                   <label className="checkout-field">
-                    Phone number
+                    {t("Phone number")}
                     <input
                       name="phone"
                       type="tel"
@@ -324,7 +349,9 @@ export default function Checkout() {
                       minLength={7}
                       maxLength={24}
                       pattern={String.raw`\+?[0-9\s\(\)\-]+`}
-                      title="Enter a valid phone number, including the country code."
+                      title={t(
+                        "Enter a valid phone number, including the country code.",
+                      )}
                       value={form.phone}
                       onChange={change("phone")}
                     />
@@ -335,8 +362,8 @@ export default function Checkout() {
                 <div className="checkout-section-title">
                   <span className="checkout-step">02</span>
                   <div>
-                    <h2>Delivery address</h2>
-                    <p>From Dubai, delivered with care to Baku.</p>
+                    <h2>{t("Delivery address")}</h2>
+                    <p>{t("From Dubai, delivered with care to Baku.")}</p>
                   </div>
                   <MapPin
                     className="checkout-section-icon"
@@ -346,11 +373,11 @@ export default function Checkout() {
                 </div>
                 <div className="checkout-field-grid">
                   <label className="checkout-field checkout-full">
-                    Street address
+                    {t("Street address")}
                     <input
                       name="address-line1"
                       autoComplete="address-line1"
-                      placeholder="Street name and building number"
+                      placeholder={t("Street name and building number")}
                       required
                       minLength={5}
                       maxLength={180}
@@ -359,42 +386,45 @@ export default function Checkout() {
                     />
                   </label>
                   <label className="checkout-field checkout-full">
-                    Apartment, floor, or delivery note <span>(optional)</span>
+                    {t("Apartment, floor, or delivery note")}{" "}
+                    <span>{t("(optional)")}</span>
                     <input
                       name="address-line2"
                       autoComplete="address-line2"
-                      placeholder="Apartment, floor, or a helpful landmark"
+                      placeholder={t("Apartment, floor, or a helpful landmark")}
                       maxLength={180}
                       value={form.line2}
                       onChange={change("line2")}
                     />
                   </label>
                   <label className="checkout-field">
-                    City
+                    {t("City")}
                     <input
                       name="city"
                       autoComplete="address-level2"
-                      value={form.city}
+                      value={t(form.city)}
                       readOnly
                     />
                   </label>
                   <label className="checkout-field">
-                    Postal code <span>(optional)</span>
+                    {t("Postal code")} <span>{t("(optional)")}</span>
                     <input
                       name="postal-code"
                       autoComplete="postal-code"
                       placeholder="AZ1000"
                       maxLength={6}
                       pattern="(?:[Aa][Zz])?[0-9]{4}"
-                      title="Enter four digits, optionally prefixed by AZ (for example, AZ1000)."
+                      title={t(
+                        "Enter four digits, optionally prefixed by AZ (for example, AZ1000).",
+                      )}
                       value={form.postalCode}
                       onChange={change("postalCode")}
                     />
                   </label>
                   <div className="checkout-field checkout-full">
-                    Country
+                    {t("Country")}
                     <div className="checkout-fixed-field">
-                      <span>🇦🇿 &nbsp; Azerbaijan</span>
+                      <span>🇦🇿 &nbsp; {t("Azerbaijan")}</span>
                       <LockKeyhole size={15} />
                     </div>
                   </div>
@@ -404,14 +434,15 @@ export default function Checkout() {
                     <Truck size={21} strokeWidth={1.7} />
                   </div>
                   <div>
-                    <strong>Dubai → Baku</strong>
+                    <strong>{t("Dubai → Baku")}</strong>
                     <span>
-                      Delivery time and any applicable customs charges must be
-                      confirmed before payment.
+                      {t(
+                        "Delivery time and any applicable customs charges must be confirmed before payment.",
+                      )}
                     </span>
                   </div>
                   <span className="checkout-delivery-price">
-                    {shipping === 0 ? "Free" : formatPrice(shipping)}
+                    {shipping === 0 ? t("Free") : formatPrice(shipping)}
                   </span>
                 </div>
               </section>
@@ -419,8 +450,8 @@ export default function Checkout() {
                 <div className="checkout-section-title">
                   <span className="checkout-step">03</span>
                   <div>
-                    <h2>Payment</h2>
-                    <p>A secure final step for your next upgrade.</p>
+                    <h2>{t("Payment")}</h2>
+                    <p>{t("A secure final step for your next upgrade.")}</p>
                   </div>
                   <CreditCard
                     className="checkout-section-icon"
@@ -432,18 +463,21 @@ export default function Checkout() {
                   <div className="checkout-payment-note">
                     <LoaderCircle size={19} className="checkout-spin" />
                     <div>
-                      <strong>Checking payment availability</strong>
-                      <p>Just a moment while we prepare your checkout.</p>
+                      <strong>{t("Checking payment availability")}</strong>
+                      <p>
+                        {t("Just a moment while we prepare your checkout.")}
+                      </p>
                     </div>
                   </div>
                 ) : configured ? (
                   <div className="checkout-payment-note">
                     <LockKeyhole size={22} />
                     <div>
-                      <strong>Pay securely online</strong>
+                      <strong>{t("Pay securely online")}</strong>
                       <p>
-                        You’ll continue to a secure payment page. Your card
-                        details stay with our payment provider.
+                        {t(
+                          "You’ll continue to a secure payment page. Your card details stay with our payment provider.",
+                        )}
                       </p>
                     </div>
                     <ShieldCheck size={22} />
@@ -452,13 +486,16 @@ export default function Checkout() {
                   <div className="checkout-payment-note checkout-coming-soon">
                     <CreditCard size={23} />
                     <div>
-                      <strong>Online payments are coming soon</strong>
+                      <strong>{t("Online payments are coming soon")}</strong>
                       <p>
-                        Our payment service is being prepared. Checkout will be
-                        available once it’s ready.
+                        {t(
+                          "Our payment service is being prepared. Checkout will be available once it’s ready.",
+                        )}
                       </p>
                     </div>
-                    <span className="checkout-coming-tag">Coming soon</span>
+                    <span className="checkout-coming-tag">
+                      {t("Coming soon")}
+                    </span>
                   </div>
                 )}
               </section>
@@ -466,9 +503,9 @@ export default function Checkout() {
             <aside className="checkout-summary-wrap">
               <section className="checkout-card checkout-summary">
                 <div className="checkout-summary-heading">
-                  <h2>Your bag</h2>
+                  <h2>{t("Your bag")}</h2>
                   <span>
-                    {quantity} {quantity === 1 ? "item" : "items"}
+                    {quantity} {quantity === 1 ? t("item") : t("items")}
                   </span>
                 </div>
                 <div className="checkout-items">
@@ -478,7 +515,13 @@ export default function Checkout() {
                     return (
                       <div className="checkout-item" key={item.id}>
                         <div className="checkout-item-image">
-                          <ProductImage src={product.image} alt={`${product.name} · ${product.subtitle}`} width={100} height={100} sizes="100px" />
+                          <ProductImage
+                            src={product.image}
+                            alt={`${product.name} · ${t(product.subtitle)}`}
+                            width={100}
+                            height={100}
+                            sizes="100px"
+                          />
                         </div>
                         <div className="checkout-item-details">
                           <div className="checkout-item-top">
@@ -487,13 +530,19 @@ export default function Checkout() {
                               type="button"
                               className="checkout-remove"
                               onClick={() => updateCart(item.id, 0)}
-                              aria-label={`Remove ${product.name}`}
+                              aria-label={t("Remove {product}", {
+                                product: product.name,
+                              })}
                             >
                               <Trash2 size={14} />
                             </button>
                           </div>
-                          <p>{product.subtitle}</p>
-                          {product.registration && <span className="registration-label">{product.registration}</span>}
+                          <p>{t(product.subtitle)}</p>
+                          {product.registration && (
+                            <span className="registration-label">
+                              {product.registration}
+                            </span>
+                          )}
                           <div className="checkout-item-bottom">
                             <div className="checkout-quantity">
                               <button
@@ -502,18 +551,25 @@ export default function Checkout() {
                                 onClick={() =>
                                   updateCart(item.id, item.quantity - 1)
                                 }
-                                aria-label={`Decrease ${product.name} quantity`}
+                                aria-label={t("Decrease {product} quantity", {
+                                  product: product.name,
+                                })}
                               >
                                 <Minus size={12} />
                               </button>
                               <span>{item.quantity}</span>
                               <button
                                 type="button"
-                                disabled={item.quantity >= Math.min(5, product.stock ?? 5)}
+                                disabled={
+                                  item.quantity >=
+                                  Math.min(5, product.stock ?? 5)
+                                }
                                 onClick={() =>
                                   updateCart(item.id, item.quantity + 1)
                                 }
-                                aria-label={`Increase ${product.name} quantity`}
+                                aria-label={t("Increase {product} quantity", {
+                                  product: product.name,
+                                })}
                               >
                                 <Plus size={12} />
                               </button>
@@ -529,32 +585,34 @@ export default function Checkout() {
                 </div>
                 <div className="checkout-costs">
                   <div>
-                    <span>Subtotal</span>
+                    <span>{t("Subtotal")}</span>
                     <strong>{formatPrice(subtotal)}</strong>
                   </div>
                   <div>
-                    <span>Delivery to Baku</span>
+                    <span>{t("Delivery to Baku")}</span>
                     <strong className={shipping === 0 ? "checkout-free" : ""}>
-                      {shipping === 0 ? "Complimentary" : formatPrice(shipping)}
+                      {shipping === 0
+                        ? t("Complimentary")
+                        : formatPrice(shipping)}
                     </strong>
                   </div>
                 </div>
                 <div className="checkout-total">
                   <div>
-                    <span>Total</span>
-                    <small>All prices in AZN</small>
+                    <span>{t("Total")}</span>
+                    <small>{t("All prices in AZN")}</small>
                   </div>
                   <strong>{formatPrice(total)}</strong>
                 </div>
                 {shipping > 0 && (
                   <p className="checkout-shipping-progress">
-                    <Truck size={14} /> Free delivery on orders of{" "}
+                    <Truck size={14} /> {t("Free delivery on orders of")}{" "}
                     {formatPrice(freeShippingThreshold)}+
                   </p>
                 )}
                 {error && (
                   <p role="alert" className="checkout-error">
-                    {error}
+                    {t(error)}
                   </p>
                 )}
                 <button
@@ -565,11 +623,11 @@ export default function Checkout() {
                   {submitting ? (
                     <>
                       <LoaderCircle className="checkout-spin" size={18} />{" "}
-                      Preparing secure payment…
+                      {t("Preparing secure payment…")}
                     </>
                   ) : configured ? (
                     <>
-                      Continue to payment <ArrowRight size={18} />
+                      {t("Continue to payment")} <ArrowRight size={18} />
                     </>
                   ) : configLoading ? (
                     "Preparing checkout…"
@@ -578,12 +636,13 @@ export default function Checkout() {
                   )}
                 </button>
                 <p className="checkout-consent">
-                  By continuing, you agree to our{" "}
-                  <Link href="/policies/terms">Terms of Service</Link> and{" "}
-                  <Link href="/policies/privacy">Privacy Policy</Link>.
+                  {t("By continuing, you agree to our")}{" "}
+                  <Link href="/policies/terms">{t("Terms of Service")}</Link>{" "}
+                  {t("and")}{" "}
+                  <Link href="/policies/privacy">{t("Privacy Policy")}</Link>.
                 </p>
                 <div className="checkout-summary-trust">
-                  <LockKeyhole size={13} /> Encrypted & secure checkout
+                  <LockKeyhole size={13} /> {t("Encrypted & secure checkout")}
                 </div>
               </section>
               <div className="checkout-care">
@@ -591,8 +650,10 @@ export default function Checkout() {
                   <ShieldCheck size={24} strokeWidth={1.5} />
                 </span>
                 <div>
-                  <strong>A thoughtful journey, every step.</strong>
-                  <p>Carefully sourced. Securely packed. Ready for you.</p>
+                  <strong>{t("A thoughtful journey, every step.")}</strong>
+                  <p>
+                    {t("Carefully sourced. Securely packed. Ready for you.")}
+                  </p>
                 </div>
               </div>
             </aside>
@@ -600,22 +661,22 @@ export default function Checkout() {
         )}
         <div className="checkout-bottom-trust">
           <span>
-            <ShieldCheck size={17} /> Carefully sourced electronics
+            <ShieldCheck size={17} /> {t("Carefully sourced electronics")}
           </span>
           <span>
-            <Globe2 size={17} /> Dubai to Baku
+            <Globe2 size={17} /> {t("Dubai to Baku")}
           </span>
           <span>
-            <Check size={17} /> Prices in AZN
+            <Check size={17} /> {t("Prices in AZN")}
           </span>
         </div>
       </main>
       <footer className="checkout-footer">
         <span>© {new Date().getFullYear()} Dubai Electronics</span>
         <div>
-          <Link href="/policies/privacy">Privacy</Link>
-          <Link href="/policies/terms">Terms</Link>
-          <Link href="/policies/shipping">Delivery & returns</Link>
+          <Link href="/policies/privacy">{t("Privacy")}</Link>
+          <Link href="/policies/terms">{t("Terms")}</Link>
+          <Link href="/policies/shipping">{t("Delivery & returns")}</Link>
         </div>
       </footer>
     </div>

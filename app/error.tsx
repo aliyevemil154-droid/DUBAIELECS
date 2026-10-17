@@ -1,25 +1,29 @@
 "use client";
+
+import { useLanguage } from "@/components/language-provider";
 export default function ErrorPage({
   reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const { t } = useLanguage();
   return (
     <main className="error-page">
       <div>
-        <p className="eyebrow">A BRIEF PAUSE</p>
+        <p className="eyebrow">{t("A BRIEF PAUSE")}</p>
         <h1>
-          A little moment.
+          {t("A little moment.")}
           <br />
-          <span>We’ll be right back.</span>
+          <span>{t("We’ll be right back.")}</span>
         </h1>
         <p>
-          Something interrupted this page. Please try again to continue
-          exploring.
+          {t(
+            "Something interrupted this page. Please try again to continue exploring.",
+          )}
         </p>
         <button className="button button-dark" onClick={reset}>
-          Try again
+          {t("Try again")}
         </button>
       </div>
     </main>

@@ -2,21 +2,23 @@ import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/inter";
 import "./globals.css";
 import "./products.css";
+import "./navigation.css";
+import { LanguageProvider } from "@/components/language-provider";
 
 export const metadata: Metadata = {
   title: {
-    default: "Dubai Electronics — Your next upgrade, from Dubai to Baku",
+    default: "Dubai Electronics — Yeni texnologiyalar, Dubaydan Bakıya",
     template: "%s | Dubai Electronics",
   },
   description:
-    "Discover thoughtfully selected smartphones, laptops, audio, and everyday tech. Dubai Electronics brings your next upgrade from Dubai to Baku, Azerbaijan.",
+    "Smartfonlar, noutbuklar, audio və gündəlik elektronika. Dubai Electronics ilə seçilmiş texnologiyalar Dubaydan Bakıya.",
   applicationName: "Dubai Electronics",
   robots: { index: true, follow: true },
   openGraph: {
     title: "Dubai Electronics",
-    description: "Exceptional tech. From Dubai to Baku.",
+    description: "Mükəmməl texnologiyalar. Dubaydan Bakıya.",
     type: "website",
-    locale: "en_AZ",
+    locale: "az_AZ",
   },
 };
 export const viewport: Viewport = {
@@ -29,8 +31,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="az">
+      <body>
+        <LanguageProvider>{children}</LanguageProvider>
+      </body>
     </html>
   );
 }

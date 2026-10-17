@@ -1,5 +1,7 @@
 "use client";
 
+import { useLanguage } from "@/components/language-provider";
+
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -68,6 +70,7 @@ function reconcilePurchasedItems(sessionId: string) {
 }
 
 export default function OrderStatus() {
+  const { t } = useLanguage();
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
   const [state, setState] = useState<PaymentState>("loading");
@@ -86,7 +89,8 @@ export default function OrderStatus() {
     }
     setState("loading");
     fetch(`/api/orders/status?session_id=${encodeURIComponent(sessionId)}`, {
-      cache: "no-store", signal: AbortSignal.timeout(45000),
+      cache: "no-store",
+      signal: AbortSignal.timeout(45000),
     })
       .then(async (response) => {
         const data = await response.json();
@@ -144,58 +148,66 @@ export default function OrderStatus() {
           </div>
           <span className="order-status-tag">
             {state === "loading"
-              ? "One moment"
+              ? t("One moment")
               : state === "paid"
-                ? "Payment confirmed"
+                ? t("Payment confirmed")
                 : state === "pending"
-                  ? "Payment processing"
+                  ? t("Payment processing")
                   : state === "expired"
-                    ? "Checkout expired"
-                    : "Payment status"}
+                    ? t("Checkout expired")
+                    : t("Payment status")}
           </span>
           <h1>
             {state === "loading" ? (
               <>
-                A quick check.
+                {t("A quick check.")}
                 <br />
-                <em>Then you’re all set.</em>
+                <em>{t("Then you’re all set.")}</em>
               </>
             ) : state === "paid" ? (
               <>
-                Thank you.
+                {t("Thank you.")}
                 <br />
-                <em>Payment received.</em>
+                <em>{t("Payment received.")}</em>
               </>
             ) : state === "pending" ? (
               <>
-                A little patience.
+                {t("A little patience.")}
                 <br />
-                <em>We’re checking your payment.</em>
+                <em>{t("We’re checking your payment.")}</em>
               </>
             ) : (
               <>
-                Let’s check
+                {t("Let’s check")}
                 <br />
-                <em>your order.</em>
+                <em>{t("your order.")}</em>
               </>
             )}
           </h1>
           <p className="order-status-description">
             {state === "loading"
-              ? "We’re securely verifying your payment with our payment provider."
+              ? t(
+                  "We’re securely verifying your payment with our payment provider.",
+                )
               : state === "paid"
-                ? "Your payment has been verified. Thank you for choosing Dubai Electronics. Keep your payment confirmation for your records."
+                ? t(
+                    "Your payment has been verified. Thank you for choosing Dubai Electronics. Keep your payment confirmation for your records.",
+                  )
                 : state === "pending"
-                  ? "Your payment hasn’t been confirmed yet. If you’ve completed payment, it may take a moment to appear. Check again before placing another order."
+                  ? t(
+                      "Your payment hasn’t been confirmed yet. If you’ve completed payment, it may take a moment to appear. Check again before placing another order.",
+                    )
                   : state === "expired"
-                    ? "This checkout session has expired. Your bag is still saved. Return to checkout to start a new payment."
-                    : message}
+                    ? t(
+                        "This checkout session has expired. Your bag is still saved. Return to checkout to start a new payment.",
+                      )
+                    : t(message)}
           </p>
           {state === "paid" && (
             <>
               <div className="order-route">
                 <span>
-                  <PackageCheck size={22} /> Dubai
+                  <PackageCheck size={22} /> {t("Dubai")}
                 </span>
                 <div>
                   <span />
@@ -203,12 +215,12 @@ export default function OrderStatus() {
                   <span />
                 </div>
                 <span>
-                  <span className="order-destination-dot" /> Baku
+                  <span className="order-destination-dot" /> {t("Baku")}
                 </span>
               </div>
               {reference && (
                 <p className="order-reference">
-                  Order reference <strong>{reference}</strong>
+                  {t("Order reference")} <strong>{reference}</strong>
                 </p>
               )}
             </>
@@ -219,7 +231,7 @@ export default function OrderStatus() {
               className="checkout-primary"
               onClick={() => setAttempt((value) => value + 1)}
             >
-              Check payment again <ArrowRight size={17} />
+              {t("Check payment again")} <ArrowRight size={17} />
             </button>
           )}
           {state !== "loading" && (
@@ -232,27 +244,27 @@ export default function OrderStatus() {
               href={state === "paid" || !sessionId ? "/" : "/checkout"}
             >
               {state === "paid" || !sessionId
-                ? "Continue exploring"
-                : "Return to checkout"}
+                ? t("Continue exploring")
+                : t("Return to checkout")}
               <ArrowRight size={17} />
             </Link>
           )}
           <div className="order-secure">
             <ShieldCheck size={16} />{" "}
             {state === "paid"
-              ? "Verified payment status"
-              : "Secure payment lookup"}
+              ? t("Verified payment status")
+              : t("Secure payment lookup")}
           </div>
         </section>
         <p className="order-footnote">
-          From Dubai to Baku. A little closer to what you love.
+          {t("From Dubai to Baku. A little closer to what you love.")}
         </p>
       </main>
       <footer className="checkout-footer">
         <span>© {new Date().getFullYear()} Dubai Electronics</span>
         <div>
-          <Link href="/policies/privacy">Privacy</Link>
-          <Link href="/policies/terms">Terms</Link>
+          <Link href="/policies/privacy">{t("Privacy")}</Link>
+          <Link href="/policies/terms">{t("Terms")}</Link>
         </div>
       </footer>
     </div>

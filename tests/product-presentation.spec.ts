@@ -1,6 +1,10 @@
 import { test, expect } from "@playwright/test";
 import { categories, products } from "../lib/catalog";
 
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("dubai-electronics-language", "en"));
+});
+
 // Real local assets only: no replacement image responses or CDN mocks.
 test("every category and finish has stable geometry, accurate selection, and honest photography", async ({ page }) => {
   test.setTimeout(120_000);

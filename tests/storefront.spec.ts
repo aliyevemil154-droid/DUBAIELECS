@@ -7,6 +7,7 @@ import path from "node:path";
 // Approved product photos are bundled locally. Missing exact finishes use an explicit fallback.
 const browserExceptions = new WeakMap<Page, string[]>();
 test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("dubai-electronics-language", "en"));
   const exceptions: string[] = [];
   browserExceptions.set(page, exceptions);
   page.on("pageerror", (error) => exceptions.push(error.message));
@@ -589,7 +590,7 @@ test("unavailable Pro Max storage is disabled and Dyson carries the requested st
   await expect(dialog.locator(".registration-label")).toHaveText("QEYDIYYATSIZ");
   await dialog.getByRole("button", { name: "Close dialog" }).click();
   await page.getByRole("button", { name: "View Dyson Supersonic Nural", exact: true }).click();
-  await expect(dialog.locator(".stock-label")).toHaveText("stokda 4 ədəd qalıb");
+  await expect(dialog.locator(".stock-label")).toHaveText("Only 4 left in stock");
   await expect(dialog.locator(".detail-price")).toContainText("489 AZN");
 });
 

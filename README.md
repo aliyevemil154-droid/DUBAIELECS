@@ -27,6 +27,12 @@ npm run start
 
 `npm run test:e2e` runs the desktop/mobile shopping tests and complete category/finish presentation checks, including a tablet viewport. Fonts and approved product photos are bundled locally. `npm run photos:audit` lists approved files and missing finishes; `npm run photos:audit -- --strict` is the photography completion gate. All 45 exact model/finish photos are approved and bundled locally; the 37 manufacturer replacements are complete. See [the photography workflow](docs/product-photography.md) for required hosts and the download/review process, [sources](public/images/SOURCES.md) for image provenance, and `CATALOG.md` for existing reference pricing.
 
+## Storefront languages and mobile navigation
+
+Azerbaijani is the default language, including server-rendered content and page metadata. Customers can choose Azərbaycan dili (AZ), Русский (RU), or English (EN); their choice is stored locally under `dubai-electronics-language` and follows them through shopping, checkout, order status, and policy pages. Model names, SKUs, specifications, and prices remain in the original catalog; only their display labels are translated.
+
+The mobile drawer has a scrollable category area, fixed language/currency controls, keyboard focus management, and reduced-motion support. It closes when the desktop navigation becomes available. `tests/navigation-language.spec.ts` covers language persistence, shopping state, menu utilities, keyboard controls, narrow/landscape/tablet viewports, and animation interruption. Translation coverage is checked by `tests/i18n.test.ts`.
+
 ## Optional Stripe adapter
 
 The implementation includes an optional hosted Stripe Checkout adapter. Choosing a payment provider, opening an eligible merchant account and activating real payments are separate launch decisions. Confirm Stripe merchant-country eligibility and AZN support for the intended account before selecting this adapter. Never enter secret keys into browser code or commit `.env.local`.
