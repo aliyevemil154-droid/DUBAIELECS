@@ -70,5 +70,338 @@
     "width": 640,
     "height": 640,
     "sha256": "695c89503c38a22e80330fcf1aef3d3d3b9d42a4df6cd5e30e48f737c00a1385"
+  },
+  {
+    "productId": "iphone-18-pro",
+    "color": "Burgundy",
+    "path": "/images/products/iphone-18-pro-burgundy.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-18-pro-finish-select-burgundy-202609?wid=940&hei=1112&fmt=png-alpha&.v=ODB3TEdtbk8ybkd3clM3dWVML3VCVmtqbnQyNWMvcld5Yy9DTnQyVUlQYWlwUGhxdXZuRTRGejlubW1oYWpjbUJ2MUJtQ2VhYWlBc1UxbHhMSzFTQjhlcC9qYU9xUXZmS1NmbGxtTVBCNVAvWncyUEszSEVwdS9nWVBDSFpPZmY",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "1d01f6c2f0b48cec6b1b5e64a3cf6ecaad511592b8c36a34feee1e5f4c0448b4"
+  },
+  {
+    "productId": "iphone-18-pro-max",
+    "color": "Black",
+    "path": "/images/products/iphone-18-pro-max-black.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-18-pro-max-finish-select-black-202609?wid=940&hei=1112&fmt=png-alpha&.v=UmkydCsrWUVqOXF2VEM2dzB6cklhWUQ2cmRnWCtSNmVDd2t4cWxWSnIvNmxIMGwrWFVjeE1VUlRMRWVWaXVleHNjcXQ1U2FBY2RzWU80SEN4Z1NYZXA4TndFSGFWdWZMa21CRXlrUm45elpxZTk0czYvTGlFaFJ6MUo4NytKelc",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "6427689efc0525000da05cbceece7994b7b686dc51820c8ff2059f92dc474fb7"
+  },
+  {
+    "productId": "iphone-18-pro",
+    "color": "Black",
+    "path": "/images/products/iphone-18-pro-black.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-18-pro-finish-select-black-202609?wid=940&hei=1112&fmt=png-alpha&.v=ODB3TEdtbk8ybkd3clM3dWVML3VCWEQvUEQ2K0RlZDNJelh6T1hiakdBdytYcDJJakhmeWdzWGE3eWZweldlbU01ZlZDa0xRSGNsZGN2cGtrRCtsV0tMSEdWSm02WG9JS0VxaEpJQnZwSFF4aU04bVBaVGpXenUzcE1tZ0JTTWk",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "bc13ffc57943e774d058626d59ce139b3d4c7b4f40f25898482c86f4cb6a3166"
+  },
+  {
+    "productId": "iphone-18-pro-max",
+    "color": "Glacier",
+    "path": "/images/products/iphone-18-pro-max-glacier.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-18-pro-max-finish-select-glacier-202609?wid=940&hei=1112&fmt=png-alpha&.v=UmkydCsrWUVqOXF2VEM2dzB6cklhWUQ2cmRnWCtSNmVDd2t4cWxWSnIvNlIrVGhreVd3bkM2T2VVUFVFWDlxYWV5ZElERWRzQWhyQ0Rwckl6Y1pkWnBzc0VHaDlyWnc3WFg1a2VpT21xTVVSTFY0UkdPZmR4RjZFWCtGdUNoa2E",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "96f7d4edf3a588fc95caec3065e8b9f66355180b690f5f34e7ece2d1154740fe"
+  },
+  {
+    "productId": "iphone-18-pro",
+    "color": "Silver",
+    "path": "/images/products/iphone-18-pro-silver.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-18-pro-finish-select-silver-202609?wid=940&hei=1112&fmt=png-alpha&.v=ODB3TEdtbk8ybkd3clM3dWVML3VCVGJOdEdsYjE3KzExOGFjT0NXdW5CRXlFVTNWQ2NHZnVQZ1ZHVERRSkREclQ5NVJ4OStiQklybHZqYkJwOUI0UWdxbzNTY3U5ODZDSkhYT1hNS1JHaWNmOVR5UGFsc2xtOXNhVml5ZmhaTkg",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "abc0e02c207f669c568461740aa76799d0abcc89b2bed4fc9ce06f248cfe33f9"
+  },
+  {
+    "productId": "iphone-18-pro-max",
+    "color": "Silver",
+    "path": "/images/products/iphone-18-pro-max-silver.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-18-pro-max-finish-select-silver-202609?wid=940&hei=1112&fmt=png-alpha&.v=UmkydCsrWUVqOXF2VEM2dzB6cklhWUQ2cmRnWCtSNmVDd2t4cWxWSnIvNWtvNWRUSnBraGdtbVpoaEhCcStEZ1JIMnJUYkhxeFlQUFF6U1JnK1dZZmROL1VCcUxMZGhIeWpHS1Y3Y0ZmQnB1TDcrSFk1dTh4UW5LRWFTUk84MUg",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "c9b623645aa974c9141c4c84bd35dda75d1fe4f5c64d9a5a3337de442cc6b52b"
+  },
+  {
+    "productId": "iphone-18-pro-max",
+    "color": "Burgundy",
+    "path": "/images/products/iphone-18-pro-max-burgundy.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-18-pro-max-finish-select-burgundy-202609?wid=940&hei=1112&fmt=png-alpha&.v=UmkydCsrWUVqOXF2VEM2dzB6cklhWUQ2cmRnWCtSNmVDd2t4cWxWSnIvNUx6WCtoaUlSYjRxQWg5OHYwMGU3Y0V3S0grNWRDVTNuaVhuc2dPbTQ4Q0V1RGVGY05iMGVCVXhlTE1BQUZjMDAxTm1nZUsxSHRZRDZzS3RtMVpRd0Q",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "011ed5be4b383c17e9a76f7e572618abafcef89228716bc14af21dd98fcb323c"
+  },
+  {
+    "productId": "iphone-18-pro",
+    "color": "Glacier",
+    "path": "/images/products/iphone-18-pro-glacier.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-18-pro-finish-select-glacier-202609?wid=940&hei=1112&fmt=png-alpha&.v=ODB3TEdtbk8ybkd3clM3dWVML3VCZFJQQXM4NUJneHhVVGhBeWh4RFRuMmd4MlArR3d3Tzc0cVhQN3J0NEdPb1gyaWxBVG1PRTU2YzhCN2c2emhzWHZ5ZTZTY3RKM0U0VzN2UzRGTGtzQ3BSTWlHRk01TzQ3QWhsMHdBb0NQZkk",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "4be481a69b1fb3fe33d76c1c4c34abd22b84907b453136aacfc8ac15e9be4052"
+  },
+  {
+    "productId": "galaxy-s26-ultra",
+    "color": "Sky Blue",
+    "path": "/images/products/galaxy-s26-ultra-sky-blue.webp",
+    "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/us/s2602/gallery/us-galaxy-s26-ultra-s948-sm-s948ulbaatt-550992840?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "90345837d5345148a412c46c561bcb0a7051f1b5c86f1775c667e1811a2146f7"
+  },
+  {
+    "productId": "galaxy-s26-ultra",
+    "color": "Pink Gold",
+    "path": "/images/products/galaxy-s26-ultra-pink-gold.webp",
+    "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/us/s2602/gallery/us-galaxy-s26-ultra-s948-sm-s948uzdaxaa-550993174?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "7846b1971d20ba7d59f63afc66357ed28fd22c095c3ce9fca2a8f86a9ef46294"
+  },
+  {
+    "productId": "galaxy-s26-ultra",
+    "color": "Black",
+    "path": "/images/products/galaxy-s26-ultra-black.webp",
+    "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/us/s2602/gallery/us-galaxy-s26-ultra-s948-sm-s948uzkaatt-550993285?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "35b4500120fb37e07ecf3bd4852270ef074a9f11765ce0e4009d645671bc7bb7"
+  },
+  {
+    "productId": "galaxy-s26-ultra",
+    "color": "Silver Shadow",
+    "path": "/images/products/galaxy-s26-ultra-silver-shadow.webp",
+    "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/us/s2602/gallery/us-galaxy-s26-ultra-s948-sm-s948uzsaxaa-550993729?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "b087a56f31040f6510c1c4fa22c4c2e794eed0b6e3f7e320717ec673e7f423d2"
+  },
+  {
+    "productId": "galaxy-s26-ultra",
+    "color": "Cobalt Violet",
+    "path": "/images/products/galaxy-s26-ultra-cobalt-violet.webp",
+    "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/us/s2602/gallery/us-galaxy-s26-ultra-s948-sm-s948uzvaatt-550993860?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "31038de620c0def9e89c0b4701b6fb217e2ee34887cec1852bda0f81cd682460"
+  },
+  {
+    "productId": "galaxy-s26-ultra",
+    "color": "White",
+    "path": "/images/products/galaxy-s26-ultra-white.webp",
+    "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/us/s2602/gallery/us-galaxy-s26-ultra-s948-sm-s948uzwaatt-550994194?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "65e99c85361d9531de6037fa1b4773766221f1299d25fddd4c8e5a632f3b1cfa"
+  },
+  {
+    "productId": "macbook-air-13-m5",
+    "color": "Sky Blue",
+    "path": "/images/products/macbook-air-13-m5-sky-blue.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mba13-m5-blue-202606?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "eca5da1b0094fbea63c73671981fde354d5396fc783d5e4c1102d7db3a9ce964"
+  },
+  {
+    "productId": "macbook-air-13-m5",
+    "color": "Silver",
+    "path": "/images/products/macbook-air-13-m5-silver.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mba13-m5-silver-202606?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "04cf7eb74f1543a74412c7a17388cae55abf1d5d7c11962634607d79690b7e76"
+  },
+  {
+    "productId": "macbook-air-13-m5",
+    "color": "Midnight",
+    "path": "/images/products/macbook-air-13-m5-midnight.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mba13-m5-midnight-202606?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "ffcab952fb3df5bfaa04affa92ee39c93673f9c770bca10fcea1232b398e037e"
+  },
+  {
+    "productId": "macbook-air-13-m5",
+    "color": "Starlight",
+    "path": "/images/products/macbook-air-13-m5-starlight.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mba13-m5-starlight-202606?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "177c775231917f0c161a2b60934e104e9a687a41fa8a29449b0b95d9b2524725"
+  },
+  {
+    "productId": "macbook-air-15-m5",
+    "color": "Sky Blue",
+    "path": "/images/products/macbook-air-15-m5-sky-blue.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mba15-m5-blue-202606?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "273e7a2fe40599f1fb6f9b3cd479e4848c7639c83d84a464e5e20ce2ff6e70bf"
+  },
+  {
+    "productId": "macbook-air-15-m5",
+    "color": "Silver",
+    "path": "/images/products/macbook-air-15-m5-silver.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mba15-m5-silver-202606?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "b458ae40dd49c48e317332d953f7d8da22a389ee784a71288ad2a1848daf1656"
+  },
+  {
+    "productId": "macbook-air-15-m5",
+    "color": "Midnight",
+    "path": "/images/products/macbook-air-15-m5-midnight.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mba15-m5-midnight-202606?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "0a8bf6d3ba2fb3ea9c4be0d4096847fe3cea3b6f777e668b8445ab206886a2c9"
+  },
+  {
+    "productId": "macbook-air-15-m5",
+    "color": "Starlight",
+    "path": "/images/products/macbook-air-15-m5-starlight.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mba15-m5-starlight-202606?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "f6176778852d4f7d8cb7a98e384f0de18b41249715509028279a6d5e709d9b10"
+  },
+  {
+    "productId": "macbook-pro-14-m5",
+    "color": "Silver",
+    "path": "/images/products/macbook-pro-14-m5-silver.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mbp14-m5-silver-202511?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "ece1bcef971f5f3b87d2b9b6668908f03dad6789e36483d7cdbeb4fc35c5ea45"
+  },
+  {
+    "productId": "macbook-pro-14-m5",
+    "color": "Space Black",
+    "path": "/images/products/macbook-pro-14-m5-space-black.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mbp14-m5-spaceblack-202511?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "9e0e3b1a3d24e41563bd0e897a5ece1d50f0b5cbeeb8123bfe75862791426ab8"
+  },
+  {
+    "productId": "macbook-pro-16-m5-pro",
+    "color": "Silver",
+    "path": "/images/products/macbook-pro-16-m5-pro-silver.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mbp16-m5-silver-202606?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "f9fc7d6c4866b80677c808e37e50e7b0d542837b97718593fb222e79da6a3f12"
+  },
+  {
+    "productId": "macbook-pro-16-m5-pro",
+    "color": "Space Black",
+    "path": "/images/products/macbook-pro-16-m5-pro-space-black.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mbp16-m5-spaceblack-202606?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "28af3192f183cbcd2b1000d590125aea1d2c95233a090ff6c5735024107a1b1a"
+  },
+  {
+    "productId": "galaxy-s25-ultra",
+    "color": "Titanium Silverblue",
+    "path": "/images/products/galaxy-s25-ultra-titanium-silverblue.webp",
+    "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/uk/2501/gallery/uk-galaxy-s25-s938-sm-s938bzbdeub-544815197?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "ee9554496106146e6c129691cc7d791b21872b8595bd41e69f1d5312f73e3c81"
+  },
+  {
+    "productId": "galaxy-s25-ultra",
+    "color": "Titanium Gray",
+    "path": "/images/products/galaxy-s25-ultra-titanium-gray.webp",
+    "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/uk/2501/gallery/uk-galaxy-s25-s938-sm-s938bztdeub-544815533?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "2b43bb7dfb57e6fcf7d310afe9157afaf615552e2592bc65190fb11daafc3dee"
+  },
+  {
+    "productId": "galaxy-s25-ultra",
+    "color": "Titanium Black",
+    "path": "/images/products/galaxy-s25-ultra-titanium-black.webp",
+    "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/uk/2501/gallery/uk-galaxy-s25-s938-sm-s938bzkdeub-544815309?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "de6acb67721d400d4842c221b9d62ea411e4332399c6b7924dc5f9ac9c4415db"
+  },
+  {
+    "productId": "galaxy-s25-ultra",
+    "color": "Titanium Whitesilver",
+    "path": "/images/products/galaxy-s25-ultra-titanium-whitesilver.webp",
+    "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/uk/2501/gallery/uk-galaxy-s25-s938-sm-s938bzsdeub-544815421?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "6a010d71b7782ff6ff82eaea3eb027a5e4cdd77b2c34956a50238cd19e8e7a26"
+  },
+  {
+    "productId": "galaxy-s25-ultra",
+    "color": "Titanium Jetblack",
+    "path": "/images/products/galaxy-s25-ultra-titanium-jetblack.webp",
+    "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/vn/2501/gallery/vn-galaxy-s25-s938-534623-sm-s938bakbxxv-544745866?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "a6d36577339cfc7d8d5f7652850faff2593b289073543066aca8198d2ac1cb48"
+  },
+  {
+    "productId": "galaxy-s25-ultra",
+    "color": "Titanium Pinkgold",
+    "path": "/images/products/galaxy-s25-ultra-titanium-pinkgold.webp",
+    "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/vn/2501/gallery/vn-galaxy-s25-s938-534623-sm-s938bzdbxxv-544745977?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "9bd7d0fb9f8b848d3854bb4399eb0af26b8dd44cfe2452022f3160a20168a3d2"
+  },
+  {
+    "productId": "galaxy-s25-ultra",
+    "color": "Titanium Jadegreen",
+    "path": "/images/products/galaxy-s25-ultra-titanium-jadegreen.webp",
+    "sourceUrl": "https://images.samsung.com/is/image/samsung/p6pim/sg/2501/gallery/sg-galaxy-s25-s938-533052-sm-s938bzgbxsp-544603092?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "5ced511262d466b32466e99b4181803c292d7844271e6ba37f755e892584f274"
+  },
+  {
+    "productId": "dyson-hair-dryer",
+    "color": "Ceramic Pink / Rose Gold",
+    "path": "/images/products/dyson-hair-dryer-ceramic-pink-rose-gold.webp",
+    "sourceUrl": "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/products/hair-care/dyson-supersonic/supersonic-nural/pdp/ceramic-pink-rose-gold/tampo1/605G-Specifications-Image-PPIDRODPL.png?$responsive$&fmt=png-alpha",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "669b3b0eead3fd9105f36551004004ae6b8dce2c48e16e6bb5a21cb46e1f6cd8"
+  },
+  {
+    "productId": "playstation-5-disc",
+    "color": "White",
+    "path": "/images/products/playstation-5-disc-white.webp",
+    "sourceUrl": "https://gmedia.playstation.com/is/image/SIEPDC/ps5-slim-edition-left-image-block-01-en-24jun24?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "6e917ecd09f60712fe53c2997c8ae4daae61b27c57f9ee712fc2ca3c4bc0e2c7"
+  },
+  {
+    "productId": "xbox-wireless-controller",
+    "color": "Robot White",
+    "path": "/images/products/xbox-wireless-controller-robot-white.webp",
+    "sourceUrl": "https://cdn-dynmedia-1.microsoft.com/is/image/microsoftcorp/gldn-Xbox-Cntrl-White-b01-1?fmt=png-alpha&wid=2000",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "a3a96a4a3498e1636920e14b4a3a7c8316394ae917aca4f56799e3367cc80315"
+  },
+  {
+    "productId": "macbook-pro-m2",
+    "color": "Space Gray",
+    "path": "/images/products/macbook-pro-m2-space-gray.webp",
+    "sourceUrl": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp-spacegray-select-202206?wid=1280&hei=1190&fmt=png-alpha&.v=1664497359481",
+    "width": 1200,
+    "height": 1200,
+    "sha256": "9c1f9152c1147a4911a875c36537ed100a833a95c314d4fc84deed8d2fbd0ce7"
   }
 ]

@@ -12,6 +12,7 @@ const officialHosts = new Set([
   "www.apple.com", "store.storeimages.cdn-apple.com", "images.samsung.com",
   "www.samsung.com", "dyson-h.assetsadobe2.com", "www.dyson.com",
   "gmedia.playstation.com", "www.playstation.com", "compass-ssl.xboxlive.com",
+  "cdn-dynmedia-1.microsoft.com",
 ]);
 const args = process.argv.slice(2);
 const command = args.shift();
@@ -75,7 +76,7 @@ async function main() {
     const directory = "work/photo-review";
     await mkdir(directory, { recursive: true });
     const file = `${directory}/${filename}.source`;
-    const response = spawnSync("curl", ["--fail", "--silent", "--show-error", "--proto", "=https", "--max-time", "40", "--max-filesize", "15728640", "--output", file, source], { encoding: "utf8", maxBuffer: 1024 * 1024 });
+    const response = spawnSync("curl", ["--fail", "--silent", "--show-error", "--location", "--proto", "=https", "--proto-redir", "=https", "--max-time", "40", "--max-filesize", "15728640", "--output", file, source], { encoding: "utf8", maxBuffer: 1024 * 1024 });
     if (response.error || response.status !== 0) throw new Error(`Download failed. Check the cloud allowlist for ${new URL(source).hostname}. ${response.stderr || response.error?.message || ""}`);
     const dimensions = await inspect(await readFile(file));
     console.log(`Staged ${product.name} / ${color.name}: ${file} (${dimensions.width} × ${dimensions.height}). Visually inspect the exact model, finish, entire outline, and background before approval.`);
