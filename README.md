@@ -25,7 +25,7 @@ npm run build
 npm run start
 ```
 
-`npm run test:e2e` runs the desktop/mobile shopping tests and complete category/finish presentation checks, including a tablet viewport. Fonts and approved product photos are bundled locally. `npm run photos:audit` lists approved files and missing finishes; `npm run photos:audit -- --strict` is the photography completion gate. Manufacturer downloads are currently blocked: 37 exact model/finish photos need replacements and display an explicit photo-unavailable state. See [the photography workflow](docs/product-photography.md) for required hosts and the download/review process, [sources](public/images/SOURCES.md) for image provenance, and `CATALOG.md` for existing reference pricing.
+`npm run test:e2e` runs the desktop/mobile shopping tests and complete category/finish presentation checks, including a tablet viewport. Fonts and approved product photos are bundled locally. `npm run photos:audit` lists approved files and missing finishes; `npm run photos:audit -- --strict` is the photography completion gate. All 45 exact model/finish photos are approved and bundled locally; the 37 manufacturer replacements are complete. See [the photography workflow](docs/product-photography.md) for required hosts and the download/review process, [sources](public/images/SOURCES.md) for image provenance, and `CATALOG.md` for existing reference pricing.
 
 ## Optional Stripe adapter
 
